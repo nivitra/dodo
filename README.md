@@ -18,9 +18,16 @@ This repository currently contains the product vision, PRD, UI/UX draft, reposit
 - `research/all_platform_repositories.csv` — repository inventory used by the research.
 - `design/Eniversal sketch.png` — source whiteboard sketch.
 
-## Open the flywheel collection
+## Host the flywheel collection
 
-Open `design/Eniversal 80 Flywheels.html` locally. It works offline and includes search, group filtering, step explanations, and a larger view for each wheel.
+The repository root contains `index.html`, so it is ready for any static host. It needs no build command, package install, server code, database, or external dependency.
+
+- **GitHub Pages:** enable Pages for the `main` branch and repository root.
+- **Netlify:** import the repository with build command empty and publish directory `.`.
+- **Vercel:** import the repository as a static project with no build command.
+- **Local:** open `index.html` directly in a browser.
+
+The hosted entry point is the same interactive collection as `design/Eniversal 80 Flywheels.html`: it includes search, group filtering, step explanations, and a larger view for each wheel. `404.html` mirrors the single-page app so static hosts can serve the experience for fallback routes.
 
 ## Status
 
