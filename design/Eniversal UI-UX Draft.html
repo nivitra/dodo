@@ -1,0 +1,812 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Eniversal UI/UX Draft</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0E1116;--panel:#171B22;--raise:#222833;--line:#2C323D;--line2:#454D5B;--text:#F4F2EC;--mute:#AEB4BF;--sun:#F5B82E;--sky:#8FB8FF;--on:#16120A}
+*{box-sizing:border-box}
+.s{width:390px;height:844px;background:var(--ink);color:var(--text);font-family:'Instrument Sans',system-ui,sans-serif;font-size:14px;line-height:1.4;position:relative;overflow:hidden;display:flex;flex-direction:column}
+.page{background:var(--ink);color:var(--text);font-family:'Instrument Sans',system-ui,sans-serif;font-size:15px;line-height:1.5;width:100%;min-height:100%}
+.wrapx{max-width:1360px;margin:0 auto;padding:64px 40px;display:flex;flex-direction:column;gap:56px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;min-height:64px;flex:none}
+.body{flex:1;min-height:0;overflow:hidden;padding:0 16px 16px;display:flex;flex-direction:column;gap:12px}
+.foot{flex:none;padding:12px 16px 24px;display:flex;flex-direction:column;gap:8px;background:var(--ink);border-top:1px solid var(--line)}
+.d{font-family:'Bricolage Grotesque','Instrument Sans',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin:0}
+.d56{font-size:56px}.d40{font-size:40px}.d32{font-size:32px}.d24{font-size:24px}.d20{font-size:20px;line-height:1.2}.d17{font-size:17px;line-height:1.25}
+.b15{font-size:15px}.b13{font-size:13px}.b12{font-size:12px}.b11{font-size:11px}
+.w6{font-weight:600}.m{color:var(--mute)}.sun{color:var(--sun)}.sky{color:var(--sky)}.p0{margin:0}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;letter-spacing:-.01em}
+.sec{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);margin:0}
+.row{display:flex;align-items:center;gap:8px}.col{display:flex;flex-direction:column;gap:8px}.btw{justify-content:space-between}.wrap{flex-wrap:wrap}.g1{flex:1;min-width:0}.start{align-items:flex-start}.ctr{justify-content:center;text-align:center}.none{flex:none}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.card.hot{border-color:var(--sun)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 12px;border-radius:99px;border:1px solid var(--line2);background:transparent;color:var(--text);font:500 13px 'Instrument Sans',sans-serif;cursor:pointer;text-decoration:none;white-space:nowrap}
+.chip.on{background:var(--sun);color:var(--on);border-color:var(--sun);font-weight:600}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:6px;background:var(--raise);color:var(--text);font:500 11px 'JetBrains Mono',monospace;white-space:nowrap}
+.tag.y{background:rgba(245,184,46,.16);color:var(--sun)}.tag.b{background:rgba(143,184,255,.16);color:var(--sky)}
+.btn{min-height:48px;border-radius:12px;font:600 15px 'Instrument Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:transparent;color:var(--text);text-decoration:none;padding:0 16px;cursor:pointer;text-align:center}
+.btn.pri{background:var(--sun);color:var(--on);border-color:var(--sun)}
+.btn.sm{min-height:44px;font-size:13px;padding:0 12px}
+.ib{width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;border:0;background:none;color:var(--text);border-radius:12px;cursor:pointer;text-decoration:none;position:relative}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.sm{width:16px;height:16px}
+.av{width:44px;height:44px;font-size:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;color:var(--on);flex:none}
+.av.a28{width:28px;height:28px;font-size:11px}.av.a36{width:36px;height:36px;font-size:13px}.av.a64{width:64px;height:64px;font-size:22px}.av.a96{width:96px;height:96px;font-size:34px}
+.c1{background:#F5B82E}.c2{background:#8FB8FF}.c3{background:#F2A58E}.c4{background:#9FD8C4}.c5{background:#C9B6F2}
+.open{outline:3px solid var(--sun);outline-offset:2px}
+.stack{display:flex}.stack .av{margin-left:-8px;border:2px solid var(--panel)}.stack .av:first-child{margin-left:0}
+.ln{height:1px;background:var(--line);flex:none;width:100%}
+.bar{height:6px;border-radius:6px;background:var(--raise);overflow:hidden;flex:none}.bar i{display:block;height:100%;background:var(--sun);border-radius:6px}.bar i.b{background:var(--sky)}
+.seg{display:flex;gap:6px;flex:none;padding:0 16px 10px;overflow:hidden}
+.input{min-height:48px;width:100%;background:var(--panel);border:1px solid var(--line2);border-radius:12px;color:var(--text);padding:0 14px;font:400 15px 'Instrument Sans',sans-serif}
+.tabbar{width:390px;height:76px;display:flex;padding:8px 6px 14px;border-top:1px solid var(--line);background:#12151B;font-family:'Instrument Sans',sans-serif;flex:none}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--mute);font-size:11px;font-weight:500;text-decoration:none;min-height:44px}
+.tab.on{color:var(--sun);font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--sun);flex:none}
+.tr{display:flex;gap:10px}.tr .rail{width:12px;flex:none;border-left:2px solid var(--line2);margin-left:5px}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}.tbl th{font:500 11px 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--mute);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line2)}.tbl td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top}
+
+html{scroll-behavior:smooth;background:#090B0F}
+body{margin:0;background:#090B0F;color:var(--text);font-family:'Instrument Sans',system-ui,sans-serif}
+.nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:12px 24px;background:#090B0F;border-bottom:1px solid var(--line)}
+.nav .brand{margin-right:auto}
+.view{display:none}.view.on{display:block}
+.flow{padding:48px 24px 8px;max-width:2000px;margin:0 auto}
+.phones{display:flex;flex-wrap:wrap;gap:48px 40px;margin-top:24px}
+.ph{margin:0;width:390px;max-width:100%}
+.ph figcaption{font:500 12px 'JetBrains Mono',monospace;color:var(--mute);margin-bottom:10px}
+.mount>.s{border-radius:24px;border:1px solid var(--line);transition:box-shadow .2s}
+.flash>.s{box-shadow:0 0 0 3px var(--sun)}
+.mount .tabbar{width:100%}
+@media (max-width:440px){.flow{padding:32px 0 8px}.flow h2{padding:0 16px}.ph figcaption{padding:0 16px}.nav{padding:10px 16px}.mount>.s{border-radius:0;border-width:1px 0;width:100%!important}}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Sections">
+<span class="d d20 brand">Eniversal UI/UX Draft</span>
+<button class="chip on" data-v="screens">Screens</button>
+<button class="chip" data-v="blueprint">Blueprint</button>
+<button class="chip" data-v="features">Feature atlas</button>
+</nav>
+<main>
+<div class="view on" id="v-screens"><section class="flow"><h2 class="d d32">1. Join</h2><div class="phones"><figure class="ph"><figcaption>1.1 Welcome and house rules</figcaption><div class="mount" id="m-Main" data-c="Main"></div></figure><figure class="ph"><figcaption>1.2 Why you're here</figcaption><div class="mount" id="m-Intent" data-c="Intent"></div></figure><figure class="ph"><figcaption>1.3 Interests</figcaption><div class="mount" id="m-Interests" data-c="Interests"></div></figure><figure class="ph"><figcaption>1.4 Proof of work</figcaption><div class="mount" id="m-Proof" data-c="Proof"></div></figure></div></section><section class="flow"><h2 class="d d32">2. Network, from LinkedIn</h2><div class="phones"><figure class="ph"><figcaption>2.1 Home feed</figcaption><div class="mount" id="m-Home" data-c="Home"></div></figure><figure class="ph"><figcaption>2.2 Profile</figcaption><div class="mount" id="m-Profile" data-c="Profile"></div></figure><figure class="ph"><figcaption>2.3 Network: the fast no</figcaption><div class="mount" id="m-Network" data-c="Network"></div></figure><figure class="ph"><figcaption>2.4 Who noticed you</figcaption><div class="mount" id="m-Insights" data-c="Insights"></div></figure></div></section><section class="flow"><h2 class="d d32">3. Community, from Reddit</h2><div class="phones"><figure class="ph"><figcaption>3.1 Communities</figcaption><div class="mount" id="m-Communities" data-c="Communities"></div></figure><figure class="ph"><figcaption>3.2 Thread tree</figcaption><div class="mount" id="m-Thread" data-c="Thread"></div></figure><figure class="ph"><figcaption>3.3 Topic timeline</figcaption><div class="mount" id="m-Timeline" data-c="Timeline"></div></figure></div></section><section class="flow"><h2 class="d d32">4. Matching, from Tinder</h2><div class="phones"><figure class="ph"><figcaption>4.1 Match deck</figcaption><div class="mount" id="m-Match" data-c="Match"></div></figure><figure class="ph"><figcaption>4.2 Earning the yes</figcaption><div class="mount" id="m-MatchDetail" data-c="MatchDetail"></div></figure><figure class="ph"><figcaption>4.3 Interested in you</figcaption><div class="mount" id="m-Interested" data-c="Interested"></div></figure><figure class="ph"><figcaption>4.4 Match chat</figcaption><div class="mount" id="m-Chat" data-c="Chat"></div></figure></div></section><section class="flow"><h2 class="d d32">5. Launch and pooled waitlist</h2><div class="phones"><figure class="ph"><figcaption>5.1 Launches</figcaption><div class="mount" id="m-Build" data-c="Build"></div></figure><figure class="ph"><figcaption>5.2 Launch page</figcaption><div class="mount" id="m-LaunchPage" data-c="LaunchPage"></div></figure><figure class="ph"><figcaption>5.3 Pooled waitlist</figcaption><div class="mount" id="m-JoinPool" data-c="JoinPool"></div></figure><figure class="ph"><figcaption>5.4 Builder console</figcaption><div class="mount" id="m-Console" data-c="Console"></div></figure></div></section><section class="flow"><h2 class="d d32">6. Events and gap finding</h2><div class="phones"><figure class="ph"><figcaption>6.1 Events</figcaption><div class="mount" id="m-Events" data-c="Events"></div></figure><figure class="ph"><figcaption>6.2 Event</figcaption><div class="mount" id="m-EventDetail" data-c="EventDetail"></div></figure><figure class="ph"><figcaption>6.3 Topic radar</figcaption><div class="mount" id="m-Radar" data-c="Radar"></div></figure></div></section><section class="flow"><h2 class="d d32">7. Every audience, every day</h2><div class="phones"><figure class="ph"><figcaption>7.1 Investor home</figcaption><div class="mount" id="m-Investor" data-c="Investor"></div></figure><figure class="ph"><figcaption>7.2 Roles for interns and pros</figcaption><div class="mount" id="m-Roles" data-c="Roles"></div></figure><figure class="ph"><figcaption>7.3 Create</figcaption><div class="mount" id="m-Create" data-c="Create"></div></figure><figure class="ph"><figcaption>7.4 Activity</figcaption><div class="mount" id="m-Inbox" data-c="Inbox"></div></figure><figure class="ph"><figcaption>7.5 Eniversal Pro</figcaption><div class="mount" id="m-Pro" data-c="Pro"></div></figure></div></section><div style="height:64px"></div></div>
+<div class="view" id="v-blueprint"><div class="mount" id="m-Blueprint" data-c="Blueprint"></div></div>
+<div class="view" id="v-features"><div class="mount" id="m-Features" data-c="Features"></div></div>
+</main>
+<template id="t-Main"><div class="s" style="width:390px;height:844px">
+<div class="body" style="padding-top:56px;gap:24px">
+<div class="col" style="gap:12px">
+<p class="sec sun">Eniversal</p>
+<h1 class="d d40">Find the people who build with you.</h1>
+<p class="b15 m p0">Students build here. Professionals, mentors and investors gather around that work.</p>
+</div>
+<div class="ln"></div>
+<p class="sec">House rules</p>
+<div class="col" style="gap:16px">
+<div class="row start"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg><div><p class="p0 w6">Be real</p><p class="p0 b13 m">Your photo, name and work must be your own.</p></div></div>
+<div class="row start"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg><div><p class="p0 w6">Show, don't claim</p><p class="p0 b13 m">Projects and conversations carry more weight than titles.</p></div></div>
+<div class="row start"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg><div><p class="p0 w6">Credit the idea</p><p class="p0 b13 m">Never copy or pitch someone else's idea as yours.</p></div></div>
+<div class="row start"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg><div><p class="p0 w6">Say no kindly</p><p class="p0 b13 m">A pass stays private. Nobody is told you passed.</p></div></div>
+</div>
+</div>
+<div class="foot">
+<a class="btn pri" href="Intent.dc.html">I agree, continue</a>
+<a class="btn" href="Home.dc.html">I already have an account</a>
+<p class="b11 m p0 ctr" style="display:flex">Continue with Google, phone OTP or college email</p>
+</div>
+</div></template><template id="t-Intent"><div class="s" style="width:390px;height:844px">
+<div class="bar"><i style="width:25%"></i></div>
+<div class="top"><a class="ib" href="Main.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><span class="b13 m" style="padding-right:12px">Step 1 of 4</span></div>
+<div class="body">
+<h1 class="d d32">What brings you here?</h1>
+<p class="p0 m">This shapes your home screen and who you meet first. Pick all that apply, and change it any time.</p>
+<sc-for list="{{opts}}" as="o" hint-placeholder-count="6">
+<button class="{{o.cls}}" style="text-align:left;color:var(--text);font:inherit;cursor:pointer;flex-direction:row;align-items:center;min-height:72px" onClick="{{o.pick}}">
+<div class="g1"><p class="p0 w6 b15">{{o.t}}</p><p class="p0 b13 m">{{o.d}}</p></div>
+<sc-if value="{{o.on}}" hint-placeholder-val="{{false}}"><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></sc-if>
+</button>
+</sc-for>
+</div>
+<div class="foot"><a class="btn pri" href="Interests.dc.html">Continue ({{n}} selected)</a></div>
+</div></template><template id="t-Interests"><div class="s" style="width:390px;height:844px">
+<div class="bar"><i style="width:50%"></i></div>
+<div class="top"><a class="ib" href="Intent.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><a class="b13 m" href="Proof.dc.html" style="padding:12px;color:var(--mute);text-decoration:none">Skip</a></div>
+<div class="body">
+<h1 class="d d32">What do you want to go deep on?</h1>
+<p class="p0 m">Pick at least 5. We use these to start your communities, events and first matches.</p>
+<input class="input" aria-label="Search topics" placeholder="Search topics, tools or skills">
+<p class="sec" style="margin-top:4px">Topics</p>
+<div class="row wrap">
+<sc-for list="{{chips}}" as="c" hint-placeholder-count="20"><button class="{{c.cls}}" onClick="{{c.pick}}" aria-pressed="{{c.on}}">{{c.t}}</button></sc-for>
+</div>
+</div>
+<div class="foot"><a class="btn pri" href="Proof.dc.html">Continue ({{n}}/5)</a></div>
+</div></template><template id="t-Proof"><div class="s" style="width:390px;height:844px">
+<div class="bar"><i style="width:100%"></i></div>
+<div class="top"><a class="ib" href="Interests.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><a class="b13 m" href="Home.dc.html" style="padding:12px;color:var(--mute);text-decoration:none">Later</a></div>
+<div class="body" style="gap:14px">
+<h1 class="d d32">Your first look is three things.</h1>
+<p class="p0 m">Picture, name and bio are what people judge first. The rest helps you earn the yes.</p>
+<div class="card row" style="flex-direction:row">
+<div class="av a64 c2 open">AR</div>
+<div class="g1" style="padding-left:6px"><p class="p0 w6 b15">Ananya Rao</p><p class="p0 b13 m">Building AI security tools. 3rd year CSE at IIIT Hyderabad.</p></div>
+</div>
+<div class="col"><div class="row btw"><span class="b13 w6">Profile strength</span><span class="b13 mono sun">45%</span></div><div class="bar"><i style="width:45%"></i></div></div>
+<p class="sec" style="margin-top:4px">Add proof</p>
+<div class="card" style="padding:4px 14px;gap:0">
+<div class="row btw" style="min-height:56px"><div><p class="p0 w6">College email</p><p class="p0 b12 m">Adds a verified student badge</p></div><span class="tag y">Verified</span></div>
+<div class="ln"></div>
+<div class="row btw" style="min-height:56px"><div><p class="p0 w6">GitHub</p><p class="p0 b12 m">Shows the projects you choose</p></div><button class="btn sm">Connect</button></div>
+<div class="ln"></div>
+<div class="row btw" style="min-height:56px"><div><p class="p0 w6">A project link</p><p class="p0 b12 m">App, repo, demo or Figma</p></div><button class="btn sm">Add</button></div>
+<div class="ln"></div>
+<div class="row btw" style="min-height:56px"><div><p class="p0 w6">60-second intro video</p><p class="p0 b12 m">Optional, in any language</p></div><button class="btn sm">Record</button></div>
+</div>
+<div class="row start"><svg class="ic sm m" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 018 0v3"></path></svg><p class="p0 b12 m">You choose what is public. Private signals help matching and are never shown to others.</p></div>
+</div>
+<div class="foot"><a class="btn pri" href="Home.dc.html">Enter Eniversal</a></div>
+</div></template><template id="t-Home"><div class="s" style="width:390px;height:844px">
+<div class="top">
+<a href="Profile.dc.html" aria-label="Your profile" style="text-decoration:none;margin-left:4px"><div class="av a36 c2 open">AR</div></a>
+<input class="input g1" style="min-height:40px;margin-left:8px;font-size:14px" aria-label="Search" placeholder="Search people, threads, launches">
+<a class="ib" href="Inbox.dc.html" aria-label="Activity, new items"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0112 0v5l2 2H4zM10 21h4"></path></svg><span class="dot" style="position:absolute;top:9px;right:10px"></span></a>
+</div>
+<div class="seg"><button class="chip on">For you</button><a class="chip" href="Network.dc.html">Network</a><a class="chip" href="Communities.dc.html">Communities</a><a class="chip" href="Radar.dc.html">Radar</a></div>
+<div class="body">
+<div class="card hot">
+<div class="row btw"><span class="tag y">Today's 3 matches</span><span class="b12 m">Refreshes at 8 PM</span></div>
+<div class="row"><div class="stack"><div class="av a36 c3">VK</div><div class="av a36 c4">SM</div><div class="av a36 c5">RD</div></div><p class="p0 b13 g1">Picked from your posts, threads and events.</p></div>
+<a class="btn pri sm" href="Match.dc.html">Review matches</a>
+</div>
+<div class="card">
+<div class="row start"><div class="av c3">VK</div><div class="g1"><p class="p0 w6">Vikram Kulkarni <span class="m" style="font-weight:400">· 2nd</span></p><p class="p0 b12 m">Building PatchPilot · NIT Trichy</p><p class="p0 b12 m">4h · in AI Security</p></div><button class="ib" aria-label="More options" style="margin:-8px -8px 0 0"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01"></path></svg></button></div>
+<p class="p0">Shipped the first version of our agent that reads security alerts and drafts a fix. 40 hours of work, and it breaks on one log format. Who has handled this?</p>
+<div class="row wrap"><span class="tag">#ai-agents</span><span class="tag">#cybersecurity</span><span class="tag b">Asking for help</span></div>
+<div class="ln"></div>
+<div class="row btw" style="margin:-4px 0">
+<button class="btn sm" style="border:0;padding:0 6px"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l7 8h-4v6H9v-6H5z"></path></svg>42</button>
+<a class="btn sm" style="border:0;padding:0 6px" href="Thread.dc.html"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H9l-5 4z"></path></svg>18 replies</a>
+<button class="btn sm" style="border:0;padding:0 6px"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"></path></svg>Save</button>
+<button class="btn sm" style="border:0;padding:0 6px"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"></path></svg>Send</button>
+</div>
+</div>
+<div class="card">
+<div class="row btw"><span class="tag b">Launching soon</span><span class="b12 m">Near your interests</span></div>
+<p class="d d17">PatchPilot needs 1 backend intern</p>
+<div class="row btw"><span class="b13 m">312 in the pool · 6 days to go</span><a class="btn sm" href="LaunchPage.dc.html">View</a></div>
+</div>
+</div>
+<dc-import name="TabBar" active="home" hint-size="390px,76px"></dc-import>
+<a class="ib" href="Create.dc.html" aria-label="Create" style="position:absolute;right:16px;bottom:92px;width:56px;height:56px;border-radius:50%;background:var(--sun);color:var(--on)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></a>
+</div></template><template id="t-Profile"><div class="s" style="width:390px;height:844px">
+<div style="height:96px;background:var(--raise);flex:none;position:relative">
+<a class="ib" href="Home.dc.html" aria-label="Back" style="position:absolute;left:8px;top:8px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+<button class="ib" aria-label="Share profile QR code" style="position:absolute;right:52px;top:8px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 18h2v2h-2z"></path></svg></button>
+<button class="ib" aria-label="Settings" style="position:absolute;right:8px;top:8px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.600 5.600l2.100 2.100M16.300 16.300l2.100 2.100M5.600 18.400l2.100-2.100M16.300 7.700l2.100-2.100"></path></svg></button>
+</div>
+<div class="body" style="margin-top:-48px;position:relative;gap:10px">
+<div class="row btw" style="align-items:flex-end"><div class="av a96 c2 open">AR</div><button class="btn sm">Edit profile</button></div>
+<div style="margin-top:4px"><div class="row"><h1 class="d d24">Ananya Rao</h1><span class="tag y">Student</span></div>
+<p class="p0" style="margin-top:4px">Building AI security tools. 3rd year CSE at IIIT Hyderabad.</p>
+<p class="p0 b13 sky" style="margin-top:4px">212 connections · 4 communities · Hyderabad</p></div>
+<div class="card" style="padding:12px 14px">
+<div class="row btw"><span class="w6 b13">Open to</span><span class="b12 m">Public</span></div>
+<div class="row wrap" style="gap:6px"><span class="chip" style="min-height:28px">Co-founder</span><span class="chip" style="min-height:28px">Internship</span><span class="chip" style="min-height:28px">Advisors</span></div>
+</div>
+<div class="grid2" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+<div class="card" style="padding:10px;gap:0"><span class="mono d17">2</span><span class="b11 m">Launches</span></div>
+<div class="card" style="padding:10px;gap:0"><span class="mono d17">37</span><span class="b11 m">Deep threads</span></div>
+<div class="card" style="padding:10px;gap:0"><span class="mono d17">5</span><span class="b11 m">Events</span></div>
+</div>
+<div class="row" style="border-bottom:1px solid var(--line);gap:18px"><span class="w6 sun b13" style="padding:8px 0;border-bottom:2px solid var(--sun)">Work</span><span class="b13 m" style="padding:8px 0">Threads</span><span class="b13 m" style="padding:8px 0">Vouches</span><span class="b13 m" style="padding:8px 0">About</span></div>
+<div class="card" style="gap:6px">
+<div class="row btw"><p class="p0 w6">AlertSense</p><span class="tag b">Live</span></div>
+<p class="p0 b13 m">Summarises security logs for small teams.</p>
+<p class="p0 b12 m">Role: Founder · Stack: Python, LangGraph</p>
+</div>
+<div class="card" style="gap:6px"><p class="p0 b13">"Ananya shipped the demo in one weekend and handled the hard edge cases too."</p><p class="p0 b12 m">Vouched by Rohan Das, team-mate at a hackathon</p></div>
+</div>
+<dc-import name="TabBar" active="home" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Network"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Home.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><h1 class="d d20 g1">Network</h1><a class="ib" href="Insights.dc.html" aria-label="Who noticed you"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"></path><circle cx="12" cy="12" r="3"></circle></svg></a></div>
+<div class="body">
+<div class="card" style="padding:4px 14px;gap:0">
+<div class="row btw" style="min-height:44px"><span class="w6">Invitations</span><span class="row sun b13 w6">4 new <svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></span></div>
+<div class="ln"></div>
+<div class="row btw" style="min-height:44px"><span class="w6">Manage my network</span><span class="row m b13">212 <svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></span></div>
+</div>
+<p class="p0 d d17" style="margin-top:4px">People around your work</p>
+<p class="p0 b13 m" style="margin-top:-8px">Tap the cross for a quick no. Nobody is told.</p>
+<div class="grid2">
+<sc-for list="{{people}}" as="p" hint-placeholder-count="4">
+<div class="card" style="padding:12px;gap:6px;position:relative;align-items:center;text-align:center">
+<button class="ib" aria-label="Not for me" style="position:absolute;right:0;top:0;color:var(--mute)"><svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<div class="{{p.av}}">{{p.i}}</div>
+<p class="p0 w6">{{p.n}}</p>
+<p class="p0 b12 m" style="min-height:50px">{{p.b}}</p>
+<p class="p0 b11 sky" style="min-height:32px">{{p.w}}</p>
+<button class="btn sm" style="width:100%">Connect</button>
+</div>
+</sc-for>
+</div>
+</div>
+<dc-import name="TabBar" active="home" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Insights"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Network.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><h1 class="d d20 g1">Who noticed you</h1><span class="tag y" style="margin-right:8px">Pro</span></div>
+<div class="body">
+<div class="card">
+<p class="sec">Past 30 days · private to you</p>
+<div class="row" style="align-items:flex-end;gap:10px"><span class="d d40 mono">186</span><p class="p0 b13 m" style="padding-bottom:4px">people viewed your profile<br><span class="sun">Up after your event thread</span></p></div>
+<svg viewBox="0 0 330 90" width="100%" role="img" aria-label="Profile views over 30 days, with a peak after the event thread">
+<path d="M0 72 L40 66 L80 70 L120 54 L160 60 L200 18 L240 42 L280 36 L330 48 L330 90 L0 90Z" fill="#F5B82E" fill-opacity="0.14"></path>
+<path d="M0 72 L40 66 L80 70 L120 54 L160 60 L200 18 L240 42 L280 36 L330 48" fill="none" stroke="#F5B82E" stroke-width="2"></path><circle cx="200" cy="18" r="4" fill="#F5B82E"></circle>
+</svg>
+</div>
+<div class="seg" style="padding:0"><button class="chip on">All</button><button class="chip">Founders</button><button class="chip">Investors</button><button class="chip">Recruiters</button></div>
+<p class="sec" style="margin-top:4px">Why they found you</p>
+<div class="card" style="padding:4px 14px;gap:0">
+<div class="row btw" style="min-height:44px"><span class="b13">Your AI agents thread</span><span class="mono b13">74</span></div><div class="ln"></div>
+<div class="row btw" style="min-height:44px"><span class="b13">Event: AI agents for cybersecurity</span><span class="mono b13">58</span></div><div class="ln"></div>
+<div class="row btw" style="min-height:44px"><span class="b13">Match deck</span><span class="mono b13">39</span></div>
+</div>
+<p class="sec" style="margin-top:4px">Recent</p>
+<div class="row"><div class="av c3">MI</div><div class="g1"><p class="p0 w6">Meera Iyer</p><p class="p0 b12 m">Security lead · Read 3 of your threads</p></div><button class="btn sm">Message</button></div>
+<div class="row"><div class="av c1">AJ</div><div class="g1"><p class="p0 w6">Arjun Jain</p><p class="p0 b12 m">Angel investor · Viewed AlertSense</p></div><button class="btn sm">Message</button></div>
+</div>
+<dc-import name="TabBar" active="home" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Communities"><div class="s" style="width:390px;height:844px">
+<div class="top" style="padding-left:16px"><h1 class="d d24 g1">Community</h1><button class="ib" aria-label="Search communities"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M16.500 16.500L21 21"></path></svg></button><button class="ib" aria-label="Create a community"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button></div>
+<div class="seg"><button class="chip on">Yours</button><button class="chip">Discover</button><a class="chip" href="Timeline.dc.html">Timelines</a><button class="chip">Campus</button></div>
+<div class="body">
+<p class="sec">Your circles</p>
+<div class="row" style="gap:12px;overflow:hidden">
+<div class="col" style="align-items:center;gap:4px;width:64px;flex:none"><div class="av a64 c1 open">AI</div><span class="b11">AI Security</span></div>
+<div class="col" style="align-items:center;gap:4px;width:64px;flex:none"><div class="av a64 c2 open">FT</div><span class="b11">Fintech</span></div>
+<div class="col" style="align-items:center;gap:4px;width:64px;flex:none"><div class="av a64 c4">HY</div><span class="b11">Hyderabad</span></div>
+<div class="col" style="align-items:center;gap:4px;width:64px;flex:none"><div class="av a64 c5">IH</div><span class="b11">IIIT-H</span></div>
+<div class="col" style="align-items:center;gap:4px;width:64px;flex:none"><div class="av a64 c3">0→1</div><span class="b11">First launch</span></div>
+</div>
+<a class="card hot" href="Timeline.dc.html" style="color:var(--text);text-decoration:none">
+<div class="row btw"><span class="tag y">Live timeline</span><span class="b12 m">5 months · 214 threads</span></div>
+<p class="d d17">The Mark Zuckerberg incident</p>
+<p class="p0 b13 m">From the March 2027 news to August's new perspectives.</p>
+</a>
+<a class="card" href="Thread.dc.html" style="color:var(--text);text-decoration:none">
+<div class="row"><div class="av a28 c1">AI</div><span class="b12 w6">AI Security</span><span class="b12 m">· 3h · 9 people you know</span></div>
+<p class="d d17">Should an AI agent be allowed to apply a security fix alone?</p>
+<div class="row wrap"><span class="tag">#ai-agents</span><span class="tag b">6 branches</span><span class="tag">48 min of reading</span></div>
+<div class="row btw"><div class="row"><span class="mono b13">▲ 214</span><span class="b13 m">86 replies</span></div><span class="b12 sun w6">You're in this thread</span></div>
+</a>
+<p class="sec">Recommended circle</p>
+<div class="card row" style="flex-direction:row;align-items:center"><div class="av c4">OS</div><div class="g1"><p class="p0 w6">Open Source India</p><p class="p0 b12 m">12k members · 8 from your college</p></div><button class="btn sm">Join</button></div>
+</div>
+<dc-import name="TabBar" active="community" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Thread"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Communities.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><div class="g1"><p class="p0 w6 b13">AI Security</p><p class="p0 b12 m">86 replies · 6 branches</p></div><button class="btn sm">Following</button></div>
+<div class="body" style="gap:10px">
+<h1 class="d d20">Should an AI agent be allowed to apply a security fix alone?</h1>
+<div class="seg" style="padding:0"><button class="chip on">Tree</button><button class="chip">Best first</button><button class="chip">Newest</button><a class="chip" href="Timeline.dc.html">Timeline</a></div>
+<div class="card" style="padding:10px 12px;gap:6px"><p class="sec">Where this has gone</p><div class="row wrap" style="gap:6px"><span class="chip on" style="min-height:30px">Trust 34</span><span class="chip" style="min-height:30px">Liability 21</span><span class="chip" style="min-height:30px">Rollback 18</span><span class="chip" style="min-height:30px">Cost 13</span></div></div>
+<div class="row start" style="gap:8px"><div class="av a36 c3">MI</div><div class="g1"><p class="p0 b13 w6">Meera Iyer <span class="tag y">Top voice</span></p><p class="p0 b13">Only with a rollback in place. The agent should be able to prove what it changed.</p><p class="p0 b12 m row" style="margin-top:4px;gap:12px"><span class="mono">▲ 88</span><span>Reply</span><span>Branch</span><span>Connect</span></p></div></div>
+<div class="row start" style="gap:8px;margin-left:17px;padding-left:16px;border-left:2px solid var(--sun)"><div class="av a28 c4">SM</div><div class="g1"><p class="p0 b13 w6">Sana Mirza</p><p class="p0 b13">We tried this at a hackathon. Rollback failed when the fix touched two services.</p><p class="p0 b12 m row" style="margin-top:4px;gap:12px"><span class="mono">▲ 31</span><span>Reply</span><span>Branch</span></p></div></div>
+<div class="row start" style="gap:8px;margin-left:17px;padding-left:44px;border-left:2px solid var(--sun)"><div class="av a28 c2">AR</div><div class="g1"><p class="p0 b13 w6">You</p><p class="p0 b13">Could the agent run the fix on a copy first?</p><p class="p0 b12 sun" style="margin-top:4px">Sana replied · 2 new</p></div></div>
+<div class="row start" style="gap:8px;margin-left:17px;padding-left:16px;border-left:2px solid var(--line2)"><div class="av a28 c5">RD</div><div class="g1"><p class="p0 b13 w6">Rohan Das</p><p class="p0 b13 m">Liability branch · 21 replies collapsed</p></div><svg class="ic sm m" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></div>
+</div>
+<div class="foot" style="padding:10px 12px 14px;flex-direction:row;align-items:center"><div class="av a36 c2">AR</div><input class="input g1" aria-label="Add to the discussion" placeholder="Add to this branch" style="min-height:44px"><button class="ib" aria-label="Send" style="color:var(--sun)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"></path></svg></button></div>
+</div></template><template id="t-Timeline"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Communities.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><p class="p0 sec g1">Topic timeline</p><button class="btn sm">Follow topic</button></div>
+<div class="body" style="gap:12px">
+<h1 class="d d24">The Mark Zuckerberg incident</h1>
+<p class="p0 b13 m" style="margin-top:-6px">Same topic, one thread of thought per month. Follow how the view changed. Sample scenario.</p>
+<div class="seg" style="padding:0"><button class="chip on">All views</button><button class="chip">Founders</button><button class="chip">Engineers</button><button class="chip">Legal</button></div>
+<div class="col" style="gap:0">
+<sc-for list="{{months}}" as="m" hint-placeholder-count="4">
+<div class="row start" style="gap:12px">
+<div class="col" style="align-items:center;gap:0;width:14px;flex:none;align-self:stretch"><span class="{{m.dot}}" style="margin-top:6px"></span><div style="flex:1;width:2px;background:var(--line2)"></div></div>
+<div class="g1" style="padding-bottom:12px">
+<div class="row btw"><span class="mono b13 w6">{{m.when}}</span><span class="b12 m">{{m.n}}</span></div>
+<a class="card" href="Thread.dc.html" style="margin-top:6px;padding:12px;gap:6px;color:var(--text);text-decoration:none">
+<p class="p0 w6 b13">{{m.t}}</p>
+<div class="row wrap" style="gap:4px"><span class="tag">{{m.a}}</span><span class="tag">{{m.b}}</span></div>
+</a>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+<dc-import name="TabBar" active="community" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Match"><div class="s" style="width:390px;height:844px">
+<div class="top" style="padding-left:16px"><h1 class="d d24 g1">Match</h1><a class="ib" href="Interested.dc.html" aria-label="Interested in you"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.500 6 6.500.5-5 4.200 1.500 6.300-5.500-3.400L6.500 20 8 13.700 3 9.500 9.500 9z"></path></svg></a><button class="ib" aria-label="Filters"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path><circle cx="16" cy="7" r="2"></circle><circle cx="8" cy="17" r="2"></circle></svg></button></div>
+<div class="seg"><sc-for list="{{roles}}" as="r" hint-placeholder-count="5"><button class="{{r.cls}}" onClick="{{r.pick}}">{{r.t}}</button></sc-for></div>
+<div class="body" style="gap:12px;padding-bottom:12px">
+<div class="card" style="flex:1;padding:0;overflow:hidden;gap:0">
+<div class="{{c.tone}}" style="flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center">
+<span class="d" style="font-size:112px;color:var(--on);opacity:.75">{{c.i}}</span>
+<span class="tag" style="position:absolute;left:12px;top:12px">[Profile photo]</span>
+<span class="tag y" style="position:absolute;right:12px;top:12px;background:var(--on)">{{c.left}}</span>
+</div>
+<div class="col" style="padding:14px;gap:6px">
+<div class="row"><p class="d d24">{{c.n}}</p><span class="tag y">{{c.badge}}</span></div>
+<p class="p0">{{c.bio}}</p>
+<p class="p0 b12 sky">{{c.why}}</p>
+<a class="b13 w6" href="MatchDetail.dc.html" style="color:var(--sun);text-decoration:none;padding:6px 0">See the proof behind this match</a>
+</div>
+</div>
+<div class="row" style="justify-content:center;gap:16px">
+<button class="ib" aria-label="Undo" onClick="{{undo}}" style="border:1px solid var(--line2);border-radius:50%;width:48px;height:48px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5L4 9l4 4M4 9h10a5 5 0 010 10h-3"></path></svg></button>
+<button class="ib" aria-label="Pass" onClick="{{next}}" style="border:1.500px solid var(--line2);border-radius:50%;width:64px;height:64px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<button class="ib" aria-label="Interested" onClick="{{next}}" style="background:var(--sun);color:var(--on);border-radius:50%;width:64px;height:64px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></button>
+<button class="ib" aria-label="Save for later" style="border:1px solid var(--line2);border-radius:50%;width:48px;height:48px"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"></path></svg></button>
+</div>
+</div>
+<dc-import name="TabBar" active="match" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-MatchDetail"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Match.dc.html" aria-label="Back to deck"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></a><p class="p0 sec g1">Co-founder match</p><button class="ib" aria-label="Report or block"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4h13l-2 4 2 4H5"></path></svg></button></div>
+<div class="body">
+<div class="row"><div class="av a64 c4">SM</div><div class="g1"><p class="d d20">Sana Mirza</p><p class="p0 b13 m">Backend engineer. Rust and security. Final year at VIT.</p></div></div>
+<div class="card hot" style="gap:8px"><p class="sec sun">Why you two</p>
+<div class="row start"><span class="tag y none">Shared</span><p class="p0 b13">Both of you went deep on the same AI agent thread.</p></div>
+<div class="row start"><span class="tag y none">Fills a gap</span><p class="p0 b13">You need backend depth. Sana wants product experience.</p></div>
+<div class="row start"><span class="tag y none">Pace</span><p class="p0 b13">Both of you are available 20+ hours a week.</p></div>
+</div>
+<p class="sec">Proof of work</p>
+<div class="card" style="padding:4px 14px;gap:0">
+<div class="row btw" style="min-height:52px"><div><p class="p0 w6 b13">LogShield</p><p class="p0 b12 m">Founder · Live, open source</p></div><span class="tag b">GitHub verified</span></div><div class="ln"></div>
+<div class="row btw" style="min-height:52px"><div><p class="p0 w6 b13">Thread: rollback failed across services</p><p class="p0 b12 m">31 upvotes · AI Security</p></div><svg class="ic sm m" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></div><div class="ln"></div>
+<div class="row btw" style="min-height:52px"><div><p class="p0 w6 b13">Hackathon: finalist</p><p class="p0 b12 m">Attended 4 Eniversal events</p></div><span class="tag">Organiser verified</span></div>
+</div>
+<p class="sec">What Sana is looking for</p>
+<div class="card" style="gap:4px"><p class="p0 b13">Someone to own product and customers. Wants equal split and to start with a 4-week trial project.</p><p class="p0 b12 m">Answers 2 of your 3 co-founder questions the same way</p></div>
+<div class="row"><div class="stack"><div class="av a28 c5">RD</div><div class="av a28 c3">MI</div></div><p class="p0 b12 m">Vouched for by Rohan and Meera, both in your network</p></div>
+</div>
+<div class="foot" style="flex-direction:row;padding-bottom:16px"><a class="btn g1" href="Match.dc.html">Not now</a><a class="btn pri g1" href="Chat.dc.html">Interested</a></div>
+</div></template><template id="t-Interested"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Match.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><h1 class="d d20 g1">14 interested in you</h1></div>
+<div class="seg"><button class="chip on">All</button><button class="chip">Co-founder</button><button class="chip">Investors</button><button class="chip">Hiring</button></div>
+<div class="body">
+<p class="p0 b13 m">You see each person's role and why they noticed you. Their face and name unlock when you match.</p>
+<div class="grid2">
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="6">
+<div class="card" style="padding:0;overflow:hidden;gap:0">
+<div class="{{c.t}}" style="height:112px;opacity:.28"></div>
+<div class="col" style="padding:10px;gap:4px"><span class="tag y" style="align-self:flex-start">{{c.r}}</span><p class="p0 b12">{{c.d}}</p></div>
+</div>
+</sc-for>
+</div>
+</div>
+<div class="foot" style="padding-bottom:14px"><a class="btn pri" href="Pro.dc.html">See who's interested</a><p class="p0 b12 m" style="text-align:center">Or review them one by one in your deck, for free.</p></div>
+<dc-import name="TabBar" active="match" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Chat"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Home.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><div class="av a36 c4">SM</div><div class="g1"><p class="p0 w6">Sana Mirza</p><p class="p0 b12 m">Usually replies in 2 hours</p></div><button class="ib" aria-label="Start video meeting"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="13" height="12" rx="2"></rect><path d="M16 11l5-3v8l-5-3"></path></svg></button><button class="ib" aria-label="More options"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h.01M12 12h.01M19 12h.01"></path></svg></button></div>
+<div class="body">
+<div class="card" style="padding:10px 12px;gap:6px"><div class="row btw"><span class="tag y">Matched: Co-founder</span><span class="b12 m">Nov 1</span></div><p class="p0 b12 m">You both went deep on the AI agent thread.</p></div>
+<p class="sec" style="text-align:center">Pick an opener</p>
+<div class="col" style="gap:6px"><button class="chip" style="justify-content:flex-start;white-space:normal;min-height:44px;text-align:left">How did you solve rollback across services?</button><button class="chip" style="justify-content:flex-start;white-space:normal;min-height:44px;text-align:left">What would you want to build in the next 4 weeks?</button></div>
+<div class="row" style="justify-content:flex-end"><p class="p0" style="background:var(--sun);color:var(--on);padding:9px 12px;border-radius:14px 14px 4px 14px;max-width:78%">How did you solve rollback across services?</p></div>
+<div class="row start"><div class="av a28 c4">SM</div><p class="p0" style="background:var(--raise);padding:9px 12px;border-radius:14px 14px 14px 4px;max-width:78%">We didn't, honestly. It's why I want to work on this. Free for a call?</p></div>
+<div class="card" style="padding:12px;gap:8px"><div class="row"><svg class="ic sm sun" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg><p class="p0 w6 b13">Sana suggested a 20-minute call</p></div><p class="p0 b12 m">Saturday, 7:00 PM IST · In-app video</p><div class="row"><button class="btn pri sm g1">Join</button><button class="btn sm g1">Suggest a time</button></div></div>
+<div class="card" style="padding:12px;gap:6px"><p class="p0 w6 b13">Try working together</p><p class="p0 b12 m">Set up a 4-week trial with shared goals before you commit.</p></div>
+</div>
+<div class="foot" style="padding:10px 12px 8px;flex-direction:row;align-items:center"><button class="ib" aria-label="Attach project, file or voice note"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button><input class="input g1" aria-label="Write a message" placeholder="Write a message" style="min-height:44px"><button class="ib" aria-label="Send" style="color:var(--sun)"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12l16-8-6 16-3-7z"></path></svg></button></div>
+<dc-import name="TabBar" active="chat" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Build"><div class="s" style="width:390px;height:844px">
+<div class="top" style="padding-left:16px"><h1 class="d d24 g1">Build</h1><a class="btn sm" href="Console.dc.html">My launch</a></div>
+<div class="seg"><button class="chip on">Launches</button><a class="chip" href="Events.dc.html">Events</a><a class="chip" href="Roles.dc.html">Roles</a><a class="chip" href="Radar.dc.html">Radar</a></div>
+<div class="body">
+<p class="sec">Launching this week</p>
+<a class="card hot" href="LaunchPage.dc.html" style="color:var(--text);text-decoration:none">
+<div class="row"><div class="av c1" style="border-radius:12px">PP</div><div class="g1"><p class="d d17">PatchPilot</p><p class="p0 b13 m">An AI agent that drafts security fixes.</p></div></div>
+<div class="row btw"><span class="tag y">6 days left</span><span class="b12 m mono">312 in the pool</span></div>
+<div class="row wrap" style="gap:4px"><span class="tag">204 users</span><span class="tag">71 workers</span><span class="tag">9 investors</span><span class="tag">28 others</span></div>
+<div class="row"><div class="stack"><div class="av a28 c4">SM</div><div class="av a28 c5">RD</div></div><span class="b12 sky">2 people you know are in</span></div>
+</a>
+<p class="sec">Just announced</p>
+<sc-for list="{{items}}" as="x" hint-placeholder-count="3">
+<a class="card" href="LaunchPage.dc.html" style="padding:12px;color:var(--text);text-decoration:none;flex-direction:row;align-items:center"><div class="{{x.c}}" style="border-radius:12px">{{x.i}}</div><div class="g1"><p class="p0 w6">{{x.n}}</p><p class="p0 b12 m">{{x.d}}</p><p class="p0 b11 mono m" style="margin-top:2px">{{x.p}}</p></div><span class="tag b">{{x.s}}</span></a>
+</sc-for>
+</div>
+<dc-import name="TabBar" active="build" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-LaunchPage"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Build.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><span class="tag y">Launching in 6 days</span><button class="ib" aria-label="Share on WhatsApp or copy link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="2.500"></circle><circle cx="6" cy="12" r="2.500"></circle><circle cx="18" cy="19" r="2.500"></circle><path d="M8.200 10.800l7.600-4.500M8.200 13.200l7.600 4.500"></path></svg></button></div>
+<div class="body">
+<div class="row"><div class="av a64 c1" style="border-radius:16px">PP</div><div class="g1"><h1 class="d d24">PatchPilot</h1><p class="p0 b13 m">An AI agent that drafts security fixes for small teams.</p></div></div>
+<div class="row"><div class="av a28 c3">VK</div><p class="p0 b12 m g1">By Vikram Kulkarni, NIT Trichy · 2 founders</p><button class="chip" style="min-height:32px">Follow</button></div>
+<div class="card hot" style="gap:10px">
+<div class="row btw"><p class="d d17">The pool: 312 people</p><span class="b12 sun">+24 today</span></div>
+<div class="row" style="gap:2px;height:10px;border-radius:6px;overflow:hidden"><div style="flex:204;height:100%;background:var(--sun)"></div><div style="flex:71;height:100%;background:var(--sky)"></div><div style="flex:9;height:100%;background:#F4F2EC"></div><div style="flex:28;height:100%;background:var(--line2)"></div></div>
+<div class="grid2" style="gap:4px 10px"><span class="b12">204 users</span><span class="b12">71 workers</span><span class="b12">9 investors</span><span class="b12">28 advisors and others</span></div>
+<div class="row"><div class="stack"><div class="av a28 c4">SM</div><div class="av a28 c5">RD</div></div><span class="b12 sky">Sana and Rohan are in</span></div>
+</div>
+<p class="sec">Build log</p>
+<div class="col" style="gap:0">
+<div class="row start" style="gap:10px;padding-bottom:10px"><span class="dot" style="margin-top:6px"></span><div><p class="p0 b13 w6">Fix accuracy improved on 3 log formats</p><p class="p0 b12 m">2 days ago · 18 reactions</p></div></div>
+<div class="row start" style="gap:10px;padding-bottom:10px"><span class="dot" style="margin-top:6px;background:var(--line2)"></span><div><p class="p0 b13 w6">The pool voted for Slack alerts first</p><p class="p0 b12 m">5 days ago · 96 votes</p></div></div>
+</div>
+<p class="sec">Looking for</p>
+<div class="row wrap" style="gap:6px"><span class="chip" style="min-height:32px">Backend intern</span><span class="chip" style="min-height:32px">Security advisor</span><span class="chip" style="min-height:32px">First 20 testers</span></div>
+</div>
+<div class="foot" style="padding-bottom:18px"><a class="btn pri" href="JoinPool.dc.html">Get in the pool</a></div>
+</div></template><template id="t-JoinPool"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="LaunchPage.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></a><span class="b13 m" style="padding-right:12px">PatchPilot's pool</span></div>
+<div class="body">
+<h1 class="d d32">How do you want to be part of this?</h1>
+<p class="p0 m" style="margin-top:-4px">One tap and you're in. Your profile does the rest, with no form to fill.</p>
+<div class="col">
+<sc-for list="{{roles}}" as="r" hint-placeholder-count="4">
+<button class="{{r.cls}}" onClick="{{r.pick}}" style="flex-direction:row;align-items:center;text-align:left;color:var(--text);font:inherit;cursor:pointer;padding:12px 14px;min-height:64px"><div class="g1"><p class="p0 w6">{{r.t}}</p><p class="p0 b12 m">{{r.d}}</p></div><span class="mono b12 m">{{r.n}}</span></button>
+</sc-for>
+</div>
+<sc-if value="{{joined}}" hint-placeholder-val="{{true}}">
+<div class="card hot" style="gap:8px">
+<div class="row btw"><p class="d d17">You're in. {{num}}</p><svg class="ic sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></div>
+<p class="p0 b13 w6">{{ask}}</p>
+<div class="row wrap" style="gap:6px"><sc-for list="{{opts}}" as="o" hint-placeholder-count="3"><button class="chip" style="min-height:36px">{{o}}</button></sc-for></div>
+<div class="ln"></div>
+<p class="p0 b12 m">Your college is 3rd among pools for this launch. Bring 3 friends to move it up.</p>
+<div class="row"><button class="btn sm g1">Share on WhatsApp</button><a class="btn sm" href="LaunchPage.dc.html">Done</a></div>
+</div>
+</sc-if>
+</div>
+</div></template><template id="t-Console"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Build.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><div class="g1"><p class="p0 w6">AlertSense</p><p class="p0 b12 m">Your launch · 11 days to go</p></div><button class="btn sm">Edit page</button></div>
+<div class="body">
+<div class="card" style="gap:6px"><div class="row btw"><p class="sec">Launch readiness</p><span class="mono b13 sun">70%</span></div><div class="bar"><i style="width:70%"></i></div><p class="p0 b12 m">Next: post a demo video. It's the biggest gap left.</p></div>
+<div class="grid2">
+<div class="card" style="padding:12px;gap:2px"><span class="d d24 mono">486</span><span class="b12 m">In the pool</span></div>
+<div class="card" style="padding:12px;gap:2px"><span class="d d24 mono">34%</span><span class="b12 m">Came from referrals</span></div>
+</div>
+<p class="sec">Your pools</p>
+<div class="card" style="padding:4px 14px;gap:0">
+<div class="row btw" style="min-height:48px"><span class="b13">Users · 331</span><button class="chip" style="min-height:32px">Send update</button></div><div class="ln"></div>
+<div class="row btw" style="min-height:48px"><span class="b13">Workers · 104</span><button class="chip" style="min-height:32px">Review 12 fits</button></div><div class="ln"></div>
+<div class="row btw" style="min-height:48px"><span class="b13">Investors · 14</span><button class="chip" style="min-height:32px">Share metrics</button></div><div class="ln"></div>
+<div class="row btw" style="min-height:48px"><span class="b13">Advisors and others · 37</span><button class="chip" style="min-height:32px">Ask for help</button></div>
+</div>
+<p class="sec">Notification plan</p>
+<div class="col" style="gap:0">
+<div class="row btw" style="min-height:44px"><div class="row"><span class="dot"></span><span class="b13">T-10: "We're building this"</span></div><span class="tag">Sent</span></div>
+<div class="row btw" style="min-height:44px"><div class="row"><span class="dot"></span><span class="b13">T-7: Feature vote</span></div><span class="tag y">Tomorrow</span></div>
+<div class="row btw" style="min-height:44px"><div class="row"><span class="dot" style="background:var(--line2)"></span><span class="b13">T-3: Demo reveal</span></div><span class="tag">Draft</span></div>
+<div class="row btw" style="min-height:44px"><div class="row"><span class="dot" style="background:var(--line2)"></span><span class="b13">T-0: Launch day alert to all pools</span></div><span class="tag">Scheduled</span></div>
+</div>
+</div>
+<dc-import name="TabBar" active="build" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Events"><div class="s" style="width:390px;height:844px">
+<div class="top" style="padding-left:16px"><h1 class="d d24 g1">Build</h1><button class="btn sm">Host event</button></div>
+<div class="seg"><a class="chip" href="Build.dc.html">Launches</a><button class="chip on">Events</button><a class="chip" href="Roles.dc.html">Roles</a><a class="chip" href="Radar.dc.html">Radar</a></div>
+<div class="seg" style="padding-top:0"><button class="chip" style="min-height:32px">Hackathons</button><button class="chip" style="min-height:32px">Competitions</button><button class="chip" style="min-height:32px">Meetups</button><button class="chip" style="min-height:32px">Near me</button></div>
+<div class="body">
+<a class="card hot" href="EventDetail.dc.html" style="color:var(--text);text-decoration:none">
+<div class="row btw"><span class="tag y">Fits your interests</span><span class="b12 m">Closes in 3 days</span></div>
+<p class="d d20">AI agents for cybersecurity</p>
+<p class="p0 b13 m">Online hackathon · Nov 22–23 · Free · Teams of 2–4</p>
+<div class="row btw"><div class="row"><div class="stack"><div class="av a28 c4">SM</div><div class="av a28 c3">VK</div><div class="av a28 c5">RD</div></div><span class="b12 sky">3 you know</span></div><span class="mono b12 m">1,240 registered</span></div>
+</a>
+<sc-for list="{{ev}}" as="e" hint-placeholder-count="3">
+<a class="card" href="EventDetail.dc.html" style="padding:12px;color:var(--text);text-decoration:none;flex-direction:row;align-items:center">
+<div class="col none" style="width:48px;align-items:center;gap:0;background:var(--raise);border-radius:10px;padding:6px 0"><span class="b11 m">{{e.m}}</span><span class="d d20">{{e.d}}</span></div>
+<div class="g1"><p class="p0 w6">{{e.t}}</p><p class="p0 b12 m">{{e.s}}</p><p class="p0 b11 mono m" style="margin-top:2px">{{e.n}}</p></div>
+</a>
+</sc-for>
+</div>
+<dc-import name="TabBar" active="build" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-EventDetail"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Events.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><span class="tag y">Closes in 3 days</span><button class="ib" aria-label="Save event"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"></path></svg></button></div>
+<div class="body">
+<h1 class="d d32">AI agents for cybersecurity</h1>
+<p class="p0 b13 m">Online hackathon · Nov 22–23 · Free · Teams of 2–4 · Hosted by AI Security circle</p>
+<div class="grid2" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+<div class="card" style="padding:10px;gap:0"><span class="mono d17">1,240</span><span class="b11 m">Registered</span></div>
+<div class="card" style="padding:10px;gap:0"><span class="mono d17">186</span><span class="b11 m">Teams</span></div>
+<div class="card" style="padding:10px;gap:0"><span class="mono d17">[₹]</span><span class="b11 m">Prize pool</span></div>
+</div>
+<div class="card hot" style="gap:8px"><p class="sec sun">Need a team?</p><p class="p0 b13">42 people here need your skills, and 3 of them are in your threads.</p><div class="row"><div class="stack"><div class="av a36 c4">SM</div><div class="av a36 c5">RD</div><div class="av a36 c3">VK</div></div><a class="btn sm g1" href="Match.dc.html">Match for a team</a></div></div>
+<p class="sec">From the event space</p>
+<div class="card" style="padding:4px 14px;gap:0">
+<a class="row btw" href="Thread.dc.html" style="min-height:48px;color:var(--text);text-decoration:none"><span class="b13">Discussion · 214 replies</span><svg class="ic sm m" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a><div class="ln"></div>
+<div class="row btw" style="min-height:48px"><span class="b13">Schedule, rules, judges</span><svg class="ic sm m" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></div><div class="ln"></div>
+<a class="row btw" href="Radar.dc.html" style="min-height:48px;color:var(--text);text-decoration:none"><span class="b13">Topic radar: where the gaps are</span><svg class="ic sm sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></a><div class="ln"></div>
+<div class="row btw" style="min-height:48px"><span class="b13">After the event: turn your project into a launch</span><svg class="ic sm m" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></div>
+</div>
+</div>
+<div class="foot" style="flex-direction:row;padding-bottom:18px"><button class="btn g1">Add to calendar</button><button class="btn pri g1">Register in one tap</button></div>
+</div></template><template id="t-Radar"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Build.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><h1 class="d d20 g1">Topic radar</h1><span class="tag" style="margin-right:8px">Past 90 days</span></div>
+<div class="body">
+<div class="seg" style="padding:0"><button class="chip on">AI agents</button><button class="chip">Security</button><button class="chip">Fintech</button><button class="chip">Bharat</button></div>
+<div class="card" style="padding:12px;gap:6px">
+<p class="p0 b13 w6">High interest, few good builders in agent security</p>
+<div style="position:relative;height:238px;border-left:1px solid var(--line2);border-bottom:1px solid var(--line2);margin:4px 0 18px 14px">
+<div style="position:absolute;left:0;top:0;width:50%;height:50%;background:rgba(245,184,46,.12)"></div>
+<span class="b11 sun w6" style="position:absolute;left:6px;top:4px">THE GAP</span>
+<span class="b11 m" style="position:absolute;left:-16px;top:50%;transform:rotate(-90deg);transform-origin:left top;white-space:nowrap;margin-top:30px">People interested</span>
+<span class="b11 m" style="position:absolute;right:0;bottom:-18px">Startups being built</span>
+<div class="row" style="position:absolute;left:22%;top:18%;gap:4px"><span class="dot" style="width:14px;height:14px"></span><span class="b11 w6">Agent security</span></div>
+<div class="row" style="position:absolute;left:58%;top:12%;gap:4px"><span class="dot" style="width:12px;height:12px;background:var(--sky)"></span><span class="b11">AI copilots</span></div>
+<div class="row" style="position:absolute;left:10%;top:40%;gap:4px"><span class="dot" style="width:10px;height:10px"></span><span class="b11">Audit logs</span></div>
+<div class="row" style="position:absolute;left:62%;top:62%;gap:4px"><span class="dot" style="width:8px;height:8px;background:var(--sky)"></span><span class="b11">Chat wrappers</span></div>
+<div class="row" style="position:absolute;left:22%;top:76%;gap:4px"><span class="dot" style="width:8px;height:8px;background:var(--line2)"></span><span class="b11 m">Quantum crypto</span></div>
+</div>
+</div>
+<p class="sec">Agent security reads as</p>
+<div class="card" style="padding:12px;gap:8px">
+<div class="row btw"><span class="b13">Interest</span><span class="tag y">Rising, volatile</span></div>
+<div class="row btw"><span class="b13">Startups building here</span><span class="mono b13">4</span></div>
+<div class="row btw"><span class="b13">Quality of those attempts</span><span class="tag">Weak, few have users</span></div>
+<div class="ln"></div>
+<p class="p0 b13"><span class="w6 sun">Possible edge:</span> people keep asking about rollback, and nobody has solved it.</p>
+</div>
+<div class="row"><a class="btn pri sm g1" href="Create.dc.html">Start on this gap</a><a class="btn sm g1" href="Match.dc.html">Find people for it</a></div>
+</div>
+<dc-import name="TabBar" active="build" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Investor"><div class="s" style="width:390px;height:844px">
+<div class="top" style="padding-left:16px"><div class="av a36 c1">AJ</div><div class="g1"><p class="p0 w6">Early signals</p><p class="p0 b12 m">Investor view · Thesis: AI, security</p></div><button class="ib" aria-label="Edit thesis"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"></path></svg></button></div>
+<div class="seg"><button class="chip on">Rising</button><button class="chip">My watchlist</button><button class="chip">Pools I'm in</button><button class="chip">Founders</button></div>
+<div class="body">
+<p class="sec">Moving this week</p>
+<div class="card hot">
+<div class="row"><div class="av c1" style="border-radius:12px">PP</div><div class="g1"><p class="d d17">PatchPilot</p><p class="p0 b12 m">AI security · 2 student founders</p></div><span class="tag y">Pre-launch</span></div>
+<div class="grid2" style="grid-template-columns:repeat(3,minmax(0,1fr));gap:6px">
+<div><p class="p0 mono b15">312</p><p class="p0 b11 m">In pool</p></div>
+<div><p class="p0 mono b15">71</p><p class="p0 b11 m">Want to work</p></div>
+<div><p class="p0 mono b15">14</p><p class="p0 b11 m">Weeks of logs</p></div>
+</div>
+<p class="p0 b12 sky">Why you: matches your thesis, and it filled a gap on the radar.</p>
+<div class="row"><a class="btn sm g1" href="LaunchPage.dc.html">Open</a><button class="btn pri sm g1">Request intro</button></div>
+</div>
+<p class="sec">Builders to know</p>
+<div class="row"><div class="av c4 open">SM</div><div class="g1"><p class="p0 w6">Sana Mirza</p><p class="p0 b12 m">2 projects shipped · Finalist, 4 events</p></div><button class="btn sm">Watch</button></div>
+<div class="row"><div class="av c5">RD</div><div class="g1"><p class="p0 w6">Rohan Das</p><p class="p0 b12 m">3 apps shipped · Top voice in UI/UX</p></div><button class="btn sm">Watch</button></div>
+<p class="sec">Founders can't be cold-messaged</p>
+<p class="p0 b13 m">Intros are accepted by founders first. This protects students and keeps your requests taken seriously.</p>
+</div>
+<dc-import name="TabBar" active="home" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Roles"><div class="s" style="width:390px;height:844px">
+<div class="top" style="padding-left:16px"><h1 class="d d24 g1">Build</h1><button class="btn sm">Post a role</button></div>
+<div class="seg"><a class="chip" href="Build.dc.html">Launches</a><a class="chip" href="Events.dc.html">Events</a><button class="chip on">Roles</button><a class="chip" href="Radar.dc.html">Radar</a></div>
+<div class="seg" style="padding-top:0"><button class="chip" style="min-height:32px">Internship</button><button class="chip" style="min-height:32px">Part-time</button><button class="chip" style="min-height:32px">Advisor</button><button class="chip" style="min-height:32px">Equity</button><button class="chip" style="min-height:32px">Paid</button></div>
+<div class="body">
+<sc-for list="{{roles}}" as="r" hint-placeholder-count="3">
+<div class="card">
+<div class="row start"><div class="{{r.c}}" style="border-radius:12px">{{r.i}}</div><div class="g1"><p class="p0 w6">{{r.t}}</p><p class="p0 b12 m">{{r.o}}</p></div><button class="ib" aria-label="Save role" style="margin:-8px -8px 0 0"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4-6 4z"></path></svg></button></div>
+<div class="row wrap" style="gap:4px"><span class="tag y">{{r.fit}}</span><span class="tag">{{r.a}}</span><span class="tag">{{r.b}}</span></div>
+<p class="p0 b12 sky">{{r.w}}</p>
+<div class="row"><button class="btn pri sm g1">Apply with your profile</button><button class="btn sm">Ask</button></div>
+</div>
+</sc-for>
+</div>
+<dc-import name="TabBar" active="build" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Create"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Home.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></a><button class="chip">Anyone <svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg></button><button class="btn pri sm">Post</button></div>
+<div class="body">
+<h1 class="d d24 m" style="font-weight:600;padding:8px 0 16px">What are you building or thinking about?</h1>
+<div class="row wrap" style="gap:6px"><span class="tag b">Add topic tags to join a timeline</span></div>
+<div class="ln"></div>
+<p class="sec">Start something bigger</p>
+<div class="col" style="gap:0">
+<sc-for list="{{opts}}" as="o" hint-placeholder-count="8">
+<a class="row" href="{{o.h}}" style="min-height:56px;color:var(--text);text-decoration:none;gap:12px"><div class="av a36" style="background:var(--raise);color:var(--sun);font-size:12px">{{o.k}}</div><div class="g1"><p class="p0 w6">{{o.t}}</p><p class="p0 b12 m">{{o.d}}</p></div></a>
+</sc-for>
+</div>
+<div class="ln"></div>
+<a class="b13 sky" href="Investor.dc.html" style="padding:12px 0;text-decoration:none">Preview the investor view</a>
+</div>
+</div></template><template id="t-Inbox"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Home.dc.html" aria-label="Back"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a><h1 class="d d20 g1">Activity</h1><button class="ib" aria-label="Notification settings"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"></path><circle cx="16" cy="7" r="2"></circle><circle cx="8" cy="17" r="2"></circle></svg></button></div>
+<div class="seg"><button class="chip on">All</button><button class="chip">Matches</button><button class="chip">Threads</button><button class="chip">Launches</button><button class="chip">Events</button></div>
+<div class="body" style="padding:0;gap:0">
+<p class="sec" style="padding:8px 16px">Needs you</p>
+<sc-for list="{{a}}" as="n" hint-placeholder-count="3">
+<a class="row start" href="{{n.h}}" style="padding:12px 16px;gap:12px;background:rgba(245,184,46,.07);border-bottom:1px solid var(--line);color:var(--text);text-decoration:none"><div class="{{n.c}}">{{n.i}}</div><div class="g1"><p class="p0 b13">{{n.t}}</p><p class="p0 b12 m">{{n.w}}</p></div></a>
+</sc-for>
+<p class="sec" style="padding:16px 16px 8px">Earlier</p>
+<sc-for list="{{b}}" as="n" hint-placeholder-count="4">
+<a class="row start" href="{{n.h}}" style="padding:12px 16px;gap:12px;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none"><div class="{{n.c}}">{{n.i}}</div><div class="g1"><p class="p0 b13">{{n.t}}</p><p class="p0 b12 m">{{n.w}}</p></div></a>
+</sc-for>
+</div>
+<dc-import name="TabBar" active="home" hint-size="390px,76px"></dc-import>
+</div></template><template id="t-Pro"><div class="s" style="width:390px;height:844px">
+<div class="top"><a class="ib" href="Interested.dc.html" aria-label="Close"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></a></div>
+<div class="body" style="gap:14px">
+<h1 class="d d32">See who's interested and match sooner.</h1>
+<div class="row" style="gap:10px">
+<button class="card hot" style="flex:1;color:var(--text);text-align:left;font:inherit"><span class="tag y" style="align-self:flex-start">Student</span><p class="d d20">[₹ PRICE]</p><p class="p0 b12 m">Per month, with a verified college email</p></button>
+<button class="card" style="flex:1;color:var(--text);text-align:left;font:inherit"><span class="tag" style="align-self:flex-start">Professional</span><p class="d d20">[₹ PRICE]</p><p class="p0 b12 m">Per month, billed by UPI or card</p></button>
+</div>
+<div class="col" style="gap:10px">
+<sc-for list="{{f}}" as="x" hint-placeholder-count="7"><div class="row start"><svg class="ic sm sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg><p class="p0 b13">{{x}}</p></div></sc-for>
+</div>
+<div class="card" style="padding:12px;gap:4px"><p class="p0 w6 b13">Always free</p><p class="p0 b12 m">Threads, events, 3 daily matches, messaging your matches and joining any pool.</p></div>
+</div>
+<div class="foot" style="padding-bottom:18px"><button class="btn pri">Continue</button><p class="p0 b11 m" style="text-align:center">Cancel any time. Restore purchases.</p></div>
+</div></template><template id="t-TabBar"><nav class="tabbar" aria-label="Main">
+<a class="{{h}}" href="Home.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6H9v6H4z"></path></svg>Home</a>
+<a class="{{c}}" href="Communities.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16 5a3.5 3.5 0 010 6.5M18 14.5c1.900.8 3 2.900 3 5.500"></path></svg>Community</a>
+<a class="{{m}}" href="Match.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="3"></rect><path d="M9.500 13l2 2 3.500-4"></path></svg>Match</a>
+<a class="{{b}}" href="Build.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c3.500 2 5 5.500 5 9l-2.500 4h-5L7 12c0-3.500 1.500-7 5-9zM9.500 16L8 21M14.500 16l1.500 5"></path><circle cx="12" cy="10" r="1.500"></circle></svg>Build</a>
+<a class="{{t}}" href="Chat.dc.html"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v12H9l-5 4z"></path></svg>Chat</a>
+</nav></template><template id="t-Blueprint"><div class="page"><div class="wrapx">
+<header class="col" style="gap:16px;max-width:900px">
+<p class="sec sun">Eniversal · Two-year blueprint · Draft</p>
+<h1 class="d d56">One app, five tabs, and a different first screen for every audience.</h1>
+<p class="b15 m p0" style="font-size:18px">Everyone shares one network. The home, the deck and the alerts change with why each person came. Every action also feeds matching.</p>
+</header>
+
+<section class="col" style="gap:16px">
+<h2 class="d d32">The app map</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="5"><div class="card"><p class="d d20">{{t.n}}</p><p class="p0 b13 sun">{{t.from}}</p><p class="p0 b13 m">{{t.d}}</p></div></sc-for>
+</div>
+<p class="p0 b13 m">Profile and search sit at the top of every tab. Create floats over Home. Activity sits under the bell.</p>
+</section>
+
+<section class="col" style="gap:16px">
+<h2 class="d d32">What each audience sees first</h2>
+<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Audience</th><th>Comes for</th><th>Home leads with</th><th>Deck shows</th><th>Their main action</th></tr></thead><tbody>
+<tr data-sc-for list="{{aud}}" as="a" hint-placeholder-count="6"><td class="w6">{{a.a}}</td><td>{{a.b}}</td><td>{{a.c}}</td><td>{{a.d}}</td><td>{{a.e}}</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="col" style="gap:16px">
+<h2 class="d d32">What we keep and what we change</h2>
+<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Reference</th><th>Keep, because it already works</th><th>Change for Eniversal</th></tr></thead><tbody>
+<tr data-sc-for list="{{ref}}" as="r" hint-placeholder-count="5"><td class="w6">{{r.a}}</td><td>{{r.b}}</td><td>{{r.c}}</td></tr>
+</tbody></table></div>
+<p class="p0 b13 m">We borrow proven patterns, not any company's branding, assets or exact layouts.</p>
+</section>
+
+<section class="col" style="gap:16px">
+<h2 class="d d32">The two-year roadmap</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+<sc-for list="{{road}}" as="p" hint-placeholder-count="4"><div class="card"><div class="row btw"><span class="tag y">{{p.k}}</span><span class="mono b12 m">{{p.w}}</span></div><p class="d d20">{{p.t}}</p><p class="p0 b13 m">{{p.d}}</p><div class="ln"></div><p class="p0 b13"><span class="w6">Gate to move on:</span> {{p.g}}</p></div></sc-for>
+</div>
+<p class="p0 b13 m">Phases and gates are proposals. Set the numeric targets once real baseline data exists.</p>
+</section>
+
+<section class="col" style="gap:16px">
+<h2 class="d d32">Test with simulated data before building the logic</h2>
+<p class="p0 m" style="max-width:800px">Seed synthetic profiles and activity, run the screens against them, and let the results change the design. These are the decisions to settle first.</p>
+<div style="overflow-x:auto"><table class="tbl"><thead><tr><th>Decision</th><th>Simulate</th><th>Watch</th><th>If it fails</th></tr></thead><tbody>
+<tr data-sc-for list="{{sim}}" as="s" hint-placeholder-count="6"><td class="w6">{{s.a}}</td><td>{{s.b}}</td><td>{{s.c}}</td><td>{{s.d}}</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="col" style="gap:16px">
+<h2 class="d d32">Interaction rules</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px">
+<sc-for list="{{rules}}" as="x" hint-placeholder-count="8"><div class="card" style="gap:4px"><p class="p0 w6">{{x.a}}</p><p class="p0 b13 m">{{x.b}}</p></div></sc-for>
+</div>
+</section>
+</div></div></template><template id="t-Features"><div class="page"><div class="wrapx" style="gap:40px">
+<header class="col" style="gap:16px;max-width:900px">
+<p class="sec sun">Eniversal · Feature atlas</p>
+<h1 class="d d56">The complete feature set, whatever ships first.</h1>
+<p class="p0 m" style="font-size:18px">Filter by phase to plan a release. P0 is the barebone build, P1 the MVP loop, P2 growth and P3 scale.</p>
+<div class="row wrap"><sc-for list="{{filters}}" as="f" hint-placeholder-count="5"><button class="{{f.cls}}" onClick="{{f.pick}}">{{f.t}}</button></sc-for></div>
+<p class="p0 b13 m mono">Showing {{count}} features · S student · I intern · W professional or worker · V investor · H hiring founder</p>
+</header>
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="12">
+<section class="col" style="gap:12px">
+<h2 class="d d24">{{g.t}}</h2>
+<div style="overflow-x:auto"><table class="tbl" style="min-width:760px"><thead><tr><th style="width:25%">Feature</th><th>The detail that matters</th><th style="width:70px">Phase</th><th style="width:110px">For</th></tr></thead><tbody>
+<tr data-sc-for list="{{g.rows}}" as="r" hint-placeholder-count="6"><td class="w6">{{r.n}}</td><td class="m">{{r.d}}</td><td><span class="{{r.c}}">{{r.p}}</span></td><td class="mono b12 m">{{r.a}}</td></tr>
+</tbody></table></div>
+</section>
+</sc-for>
+</div></div></template>
+<script>
+class DCLogic{
+  constructor(props){this.props=props||{};this.state={}}
+  setState(s){this.state=Object.assign({},this.state,s);if(this._r)this._r()}
+  forceUpdate(){if(this._r)this._r()}
+  renderVals(){return{}}
+}
+const COMPONENTS={"Main":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Intent":(function(){class Component extends DCLogic{state={p:{build:true,cof:true}};renderVals(){const L=[['build','Build something','Launch a project and gather people around it'],['cof','Find a co-founder','Meet someone to build with from the start'],['intern','Get an internship or role','Show your work to teams that are hiring'],['hire','Hire or take interns','Find people through what they have built'],['advise','Advise or contribute','Give time to ideas you believe in'],['invest','Invest','See early projects and real builders']];const p=this.state.p;return{n:Object.values(p).filter(Boolean).length,opts:L.map(([k,t,d])=>({t,d,on:!!p[k],cls:p[k]?'card hot':'card',pick:()=>this.setState({p:{...p,[k]:!p[k]}})}))}}}
+return Component})(),"Interests":(function(){class Component extends DCLogic{state={p:{'AI agents':1,'Cybersecurity':1,'Fintech':1}};renderVals(){const L=['AI agents','Cybersecurity','Fintech','SaaS','D2C','Edtech','Healthtech','Agritech','Climate','Robotics','Web3','Open source','Mobile apps','UI/UX','Product','Growth','Fundraising','Deep tech','Gaming','Creator tools','Bharat-first','Hackathons','Research','Hardware','Data science','Devtools'];const p=this.state.p;return{n:Object.values(p).filter(Boolean).length,chips:L.map(t=>({t,on:!!p[t],cls:p[t]?'chip on':'chip',pick:()=>this.setState({p:{...p,[t]:!p[t]}})}))}}}
+return Component})(),"Proof":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Home":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Profile":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Network":(function(){class Component extends DCLogic{renderVals(){return{people:[{i:'SM',av:'av a64 c4 open',n:'Sana Mirza',b:'Backend intern. Rust and security, final year at VIT.',w:'In 2 of your threads'},{i:'RD',av:'av a64 c5',n:'Rohan Das',b:'Designer who ships. Built 3 student apps.',w:'Going to your event'},{i:'MI',av:'av a64 c3',n:'Meera Iyer',b:'Security lead at a SaaS company. Advises students.',w:'Open to advising'},{i:'AJ',av:'av a64 c1',n:'Arjun Jain',b:'Angel investor. Backs student founders early.',w:'Joined your waitlist'}]}}}
+return Component})(),"Insights":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Communities":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Thread":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Timeline":(function(){class Component extends DCLogic{renderVals(){return{months:[{when:'Mar 2027',n:'The start · 96 threads',t:'What happened, and what we know so far',a:'#origin',b:'Facts',dot:'dot'},{when:'Jun 2027',n:'58 threads',t:'What founders should do differently now',a:'#founders',b:'New approach',dot:'dot'},{when:'Jul 2027',n:'37 threads',t:'The engineering view: could it have been prevented?',a:'#engineering',b:'Counter-view',dot:'dot'},{when:'Aug 2027',n:'23 threads',t:'Five months later: who was right?',a:'#retrospective',b:'Latest',dot:'dot'}]}}}
+return Component})(),"Match":(function(){class Component extends DCLogic{state={i:0,r:'Co-founder'};renderVals(){const D=[{i:'SM',tone:'c4',n:'Sana Mirza',badge:'Student',bio:'Backend engineer. Rust and security. Wants to build something with real customers.',why:'You both care about AI agents and argued the same thread.',left:'1 of 3 today'},{i:'RD',tone:'c5',n:'Rohan Das',badge:'Student',bio:'Designer who ships. Built 3 student apps and wants a technical partner.',why:'You need design and Rohan wants to go deep on security.',left:'2 of 3 today'},{i:'MI',tone:'c3',n:'Meera Iyer',badge:'Advisor',bio:'Security lead at a SaaS company. Gives students 2 hours a month.',why:'Replied to your thread and looks for early security projects.',left:'3 of 3 today'}];const R=['Co-founder','Intern','Contributor','Advisor','Hiring','Investor'];const s=this.state;return{c:D[s.i%D.length],next:()=>this.setState({i:s.i+1}),undo:()=>this.setState({i:Math.max(0,s.i-1)}),roles:R.map(t=>({t,cls:t===s.r?'chip on':'chip',pick:()=>this.setState({r:t})}))}}}
+return Component})(),"MatchDetail":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Interested":(function(){class Component extends DCLogic{renderVals(){return{cards:[{t:'c1',r:'Investor',d:'Viewed your launch twice'},{t:'c2',r:'Co-founder',d:'Same event last month'},{t:'c3',r:'Hiring',d:'Read your AI agent thread'},{t:'c4',r:'Intern',d:'Joined your waitlist as a worker'},{t:'c5',r:'Advisor',d:'Follows AI Security'},{t:'c2',r:'Co-founder',d:'From your college'}]}}}
+return Component})(),"Chat":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Build":(function(){class Component extends DCLogic{renderVals(){return{items:[{c:'av c2',i:'KR',n:'KiranaRecon',d:'Daily UPI reconciliation for small shops',p:'128 in the pool · Hiring',s:'Idea'},{c:'av c4',i:'CL',n:'CampusLoop',d:'Lost-and-found for colleges',p:'86 in the pool · IIT Madras',s:'Beta'},{c:'av c5',i:'VD',n:'Vidya Notes',d:'Hindi voice notes for exam revision',p:'451 in the pool · 3 investors',s:'Prototype'}]}}}
+return Component})(),"LaunchPage":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"JoinPool":(function(){class Component extends DCLogic{state={r:'u'};renderVals(){const L=[['u','I want to use it','Early access and a vote on features',204,'#205 in the user pool','What should ship first?',['Slack alerts','Jira tickets','Auto-rollback']],['w','I want to work on it','From the start, or once it takes off',71,'#72 in the worker pool','When would you join?',['From day one','If it gets traction','Part-time now']],['i','I want to back it','Private updates and founder access',9,'#10 in the investor pool','What would you like to see?',['Early metrics','Founder call','Pitch deck']],['a','I want to advise or help','Offer your skill or a useful intro',28,'#29 in this pool','How can you help?',['Security review','Intros','Go-to-market']]];const s=this.state.r;const c=L.find(x=>x[0]===s);return{joined:!!c,num:c?c[4]:'',ask:c?c[5]:'',opts:c?c[6]:[],roles:L.map(x=>({t:x[1],d:x[2],n:x[3]+(x[0]===s?1:0),cls:x[0]===s?'card hot':'card',pick:()=>this.setState({r:x[0]})}))}}}
+return Component})(),"Console":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Events":(function(){class Component extends DCLogic{renderVals(){return{ev:[{m:'DEC',d:'06',t:'Fintech for Bharat ideathon',s:'Bengaluru · Prize: [AMOUNT] · Solo or team',n:'640 registered'},{m:'DEC',d:'14',t:'First Launch Night',s:'Hyderabad · 100 seats · Student builders',n:'72 of 100 seats'},{m:'JAN',d:'11',t:'Founders meet investors',s:'Online · Invite only · Apply with a launch',n:'38 applied'}]}}}
+return Component})(),"EventDetail":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Radar":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Investor":(function(){class Component extends DCLogic{renderVals(){return{}}}
+return Component})(),"Roles":(function(){class Component extends DCLogic{renderVals(){return{roles:[{c:'av c1',i:'PP',t:'Backend intern',o:'PatchPilot · Remote · 3 months',fit:'Strong fit',a:'[₹ stipend]',b:'Certificate',w:'They liked your Rust work on GitHub.'},{c:'av c2',i:'KR',t:'Part-time product lead',o:'KiranaRecon · Bengaluru · 10 hrs a week',fit:'Good fit',a:'Equity',b:'For professionals',w:'Fits your weekend availability.'},{c:'av c4',i:'CL',t:'Security advisor',o:'CampusLoop · 2 hours a month',fit:'Open',a:'Advisory',b:'Vouch required',w:'One of their founders is in your network.'}]}}}
+return Component})(),"Create":(function(){class Component extends DCLogic{renderVals(){return{opts:[{k:'TH',t:'Deep thread',d:'A question or view for a community',h:'Thread.dc.html'},{k:'LA',t:'Announce a launch',d:'Open a pool before you have built it',h:'Console.dc.html'},{k:'EV',t:'Host an event',d:'A hackathon, competition or meetup',h:'Events.dc.html'},{k:'RO',t:'Post a role',d:'Co-founder, intern, advisor or hire',h:'Roles.dc.html'},{k:'AS',t:'Ask for help',d:'Feedback, intros or a code review',h:'Home.dc.html'},{k:'LG',t:'Build log',d:'Share what shipped this week',h:'LaunchPage.dc.html'},{k:'PO',t:'Poll',d:'Let the community decide',h:'Home.dc.html'}]}}}
+return Component})(),"Inbox":(function(){class Component extends DCLogic{renderVals(){return{a:[{c:'av c4',i:'SM',t:'You and Sana matched. Pick an opener before it goes quiet.',w:'10m',h:'Chat.dc.html'},{c:'av c1',i:'PP',t:'PatchPilot goes live in 6 days. Your feature vote closes tonight.',w:'1h',h:'LaunchPage.dc.html'},{c:'av c1',i:'AJ',t:'Arjun Jain asked for an intro to AlertSense. Accept or decline.',w:'3h',h:'Console.dc.html'}],b:[{c:'av c3',i:'MI',t:'Meera replied in your branch on AI agent fixes.',w:'5h',h:'Thread.dc.html'},{c:'av c2',i:'TL',t:'New June view on a timeline you follow.',w:'Yesterday',h:'Timeline.dc.html'},{c:'av c5',i:'EV',t:'Registrations close in 3 days for AI agents for cybersecurity.',w:'Yesterday',h:'EventDetail.dc.html'},{c:'av c4',i:'RD',t:'Rohan vouched for your work on AlertSense.',w:'2d',h:'Profile.dc.html'}]}}}
+return Component})(),"Pro":(function(){class Component extends DCLogic{renderVals(){return{f:['See who is interested in you','More daily matches and role filters','Undo a pass','Full "who noticed you" insights','Full topic radar with gap alerts','Browse privately','Boost your launch to people who fit']}}}
+return Component})(),"TabBar":(function(){class Component extends DCLogic{renderVals(){const a=this.props.active??'home';const f=k=>a===k?'tab on':'tab';return{h:f('home'),c:f('community'),m:f('match'),b:f('build'),t:f('chat')}}}
+return Component})(),"Blueprint":(function(){class Component extends DCLogic{renderVals(){const O=(k,R)=>R.map(r=>Object.fromEntries(k.map((x,i)=>[x,r[i]])));return{
+tabs:O(['n','from','d'],[['Home','LinkedIn','Feed, daily matches, network, invitations and who noticed you.'],['Community','Reddit','Circles, tree threads, topic timelines and campus groups.'],['Match','Tinder','A limited daily deck with role filters and proof behind each person.'],['Build','Indie Hackers, Whop, TrustMRR, Unstop','Launches, pools, events, roles and the topic radar.'],['Chat','LinkedIn, Tinder','Match chats, team rooms, intros, calls and trial projects.']]),
+aud:O(['a','b','c','d','e'],[['Students','Team, proof, first launch','Daily matches and events','Co-founders and teammates','Post, join an event, open a pool'],['Interns','First real work','Roles that fit their work','Teams hiring interns','Apply with their profile'],['Working professionals','Ideas, side projects, giving back','Projects seeking their skill','Founders needing a part-timer or advisor','Advise or join a worker pool'],['Workers','Early access to good teams','Pools hiring soon','Teams at the right stage','Join a worker pool'],['Investors','Early signal on people and ideas','Rising launches and builders','Founders fitting their thesis','Watch, then request an intro'],['Hiring founders','People who can really do the work','Applicants and pool fits','Candidates with proof','Post a role, review fits']]),
+ref:O(['a','b','c'],[['LinkedIn','Picture, name and bio first. Open-to ring, connect grid, invitations, profile views, QR code, messaging and calls.','Connections matter less than proof. A quiet cross gives a private no. Views explain why someone found you.'],['Reddit','Community chips, recommended lists, join buttons, votes, karma, moderation queues and favourites.','Trees replace flat scrolling, and tagged threads form month-by-month timelines. Real identity builds bonds.'],['Tinder','House rules, one step per screen, interest chips, profile strength ring, big action buttons, likes grid, report flow, tiered upgrade.','Cards show proof and role, not looks. A limited daily deck replaces endless swiping. Blur hides identity but never role.'],['Indie Hackers, Whop, TrustMRR','Build logs, public momentum and proof of traction.','A pooled waitlist for users, workers, investors and advisors, joined in one tap.'],['Unstop','Hackathons, competitions, deadlines and registration.','Events feed team matching, topic data and post-event launches.']]),
+road:O(['k','w','t','d','g'],[['P0','Months 0–3','Barebone','Sign-up, profile, posts as cards, tags, circles, tree threads, search, connect and basic chat.','The first 100 builders post and reply without being prompted.'],['P1','Months 3–9','MVP loop','Daily match deck, role filters, launch pages, pooled waitlist, events, notifications and first triangulation.','Matches lead to real conversations, and launches fill their pools.'],['P2','Months 9–15','Growth','Topic timelines, radar, collaborative filtering, campus pools, vouches, Pro plan, investor and hiring views.','Pro and hiring revenue start to repeat, and campuses grow by referral.'],['P3','Months 15–24','Scale','Regional languages, AI thread summaries, team rooms, trial projects, data room, verified outcomes and an API.','Eniversal becomes the default place Indian students start a company.']]),
+sim:O(['a','b','c','d'],[['Daily deck size','3, 5 and 10 cards a day','Review rate, return rate, match quality','Change the limit or the refresh time'],['First screen','Bio only versus bio plus one proof line','Time to a decision, regret on passes','Add the proof line to the first look'],['Cold start','Tags and groups only, 100 users','Whether matches feel relevant','Use event teams as first matches'],['Thread shape','Tree versus flat with branch tabs','Depth, drop-off, replies per reader','Default to best first and hide the tree'],['Waitlist','One tap versus one tap plus a question','Join rate, later engagement','Move the question to a later reminder'],['Notifications','Daily digest versus each event','Opens, opt-outs','Cap by type and default to a digest']]),
+rules:O(['a','b'],[['A no is always private','Passes and dismissals are never shown to the other person.'],['Every match says why','No recommendation appears without a stated reason.'],['Everything is reachable in one hand','Primary actions sit at the bottom, with targets of at least 44 px.'],['No dead ends','Every empty state offers the next useful step.'],['Signals stay visible and controllable','People can see and reset what shapes their matches.'],['Students are protected','No cold messages from investors, with age checks and fast reporting.'],['Works on cheap phones','Light screens, offline drafts and strong performance on slow networks.'],['Built for India','UPI, WhatsApp sharing, IST, ₹, campuses and Hinglish support.']])
+}}}
+return Component})(),"Features":(function(){class Component extends DCLogic{state={f:'All'};renderVals(){const A='S I W V H';const D=[
+['Join and identity',[['Sign-up','Google, phone OTP and college email; no password needed','P0',A],['House rules','Four rules, agreed before entry','P0',A],['Multi-intent setup','Pick several reasons for joining; change any time','P0',A],['Interest chips','Minimum 5, searchable, seeds first circles and events','P0',A],['Profile strength ring','Shows the next most useful step, not just a percentage','P0',A],['College verification','Student badge from college email, with alumni status after graduation','P0','S I'],['GitHub, Figma and link import','Pick which projects appear; nothing public by default','P1','S I W H'],['Video intro','Up to 60 seconds, any language, optional','P2','S I W'],['Investor verification','Manual review with proof of past deals before investor tools unlock','P2','V'],['Age-appropriate safeguards','Stricter defaults for under-18s; no investor contact','P0','S I'],['Language setting','English first, then Hinglish, Hindi and regional languages','P3',A]]],
+['Profile and networking',[['First-look header','Picture, name and bio always come first and in that order','P0',A],['Open-to ring and roles','Ring on the photo; chips for co-founder, intern, advisor and more','P0',A],['Work tab','Projects, role, stack, status and verified links','P0','S I W H'],['Threads tab','The person’s best discussions, chosen by depth','P1',A],['Connect with a note','Short note and shared-context prompt','P0',A],['Quiet cross','Private no on any suggestion; feeds matching','P0',A],['Invitations','Accept or ignore in one tap, showing shared context','P0',A],['Manage my network','Connections, following, circles, launches and events with counts','P1',A],['Vouches','From real collaborators only, tied to a project or event','P2',A],['Who noticed you','Views plus the reason they found you; filter by audience','P2',A],['QR code connect','Show or scan at events; save to gallery','P1',A],['Browse privately','Hide your profile views, as a Pro feature','P2',A],['Saved people','Private list with personal notes','P1','H V W'],['Mutual connection intros','Request an intro through someone who knows both people','P2',A]]],
+['Home feed',[['Ranked feed','Posts, threads, launches, events and roles, ranked by fit','P0',A],['Daily match card','Fixed slot at the top; refreshes at a set hour','P1',A],['Post types','Text, image, video, document, poll, build log, ask for help','P0',A],['Audience control','Anyone, connections or one circle per post','P1',A],['Reactions and upvotes','One simple upvote, plus “useful” for answers','P0',A],['Reason labels','Every suggested item explains why it appears','P1',A],['Not interested controls','Hide, mute a topic, or fewer like this','P0',A],['Saved items','Collections for posts, threads, roles and events','P1',A],['Audience-based home','Different first modules for each audience','P2',A]]],
+['Community',[['Circles','Topic, college and city communities, public or private','P0',A],['Category chips','Browse by topic with recommended and similar lists','P0',A],['Tree threads','Visual branches, collapse and depth indicators','P0',A],['Branch map','Summary chips show where the conversation went, with reply counts','P1',A],['Branch off','Start a side discussion without losing the parent','P1',A],['Topic tags','Link threads across communities and months','P0',A],['Topic timeline','Monthly view of the same topic with different perspectives','P2',A],['Perspective filter','See one topic through founders, engineers or legal','P2',A],['AI catch-up','“What did I miss” summary, always linked to sources','P3',A],['Reputation','Earned per topic, not one global score','P1',A],['Top voice badge','Awarded by helpful depth, not by volume','P2',A],['Moderation tools','Queues, mod mail, rules, reports, shared bans','P1','S W'],['Campus circles','Auto-join your college, with ambassador roles','P1','S I'],['Community-run events','Circles can host AMAs, debates and meetups','P2',A],['Live rooms','Audio or text rooms that become threads afterwards','P3',A],['Your place markers','“You’re in this thread” and “new since you left”','P1',A]]],
+['Signals and intelligence',[['Explicit signals','Bio, roles, skills, interests, joins and registrations','P0',A],['Implicit signals','Read depth, replies, passes, revisits and time on topics','P1',A],['Data triangulation','Compare claims with behaviour to reach a few clear results','P1',A],['Collaborative filtering','Once there is enough activity data; rules-based until then','P2',A],['Why this match','A plain-language reason for every result','P1',A],['Signal controls','View, reset or turn off each signal type','P1',A],['Trust score (internal)','Fights fake accounts and spam; never shown publicly','P1',A],['Synthetic data lab','Simulated users to test ranking and UI before launch','P0','Internal'],['Outcome learning','Learn from real outcomes such as teams formed, not just clicks','P3','Internal']]],
+['Matching',[['Limited daily deck','Quality over endless swiping; 3 free a day, to be tested','P1',A],['Role filter','Co-founder, intern, contributor, advisor, hiring, investor','P1',A],['First-look card','Photo, name, bio, role badge and one reason','P1',A],['Proof sheet','Work, threads, events and vouches behind the yes','P1',A],['Pass, interested, save, undo','Undo is limited; every pass stays private','P1',A],['Mutual match','Chat opens only when both say yes','P1',A],['Interested in you','Role and reason shown, face hidden; full view on Pro','P2',A],['Co-founder questions','Equity, time, risk, location and ambition, compared privately','P2','S W'],['Availability','Hours per week, start date and remote or local','P1','S I W'],['Super interest','A limited way to send a stronger signal with a note','P2',A],['Team matching','Find teammates to fill a specific event or project gap','P2','S I'],['Advisor matching','Advisors set their monthly hours and topics','P2','S W'],['Match expiry nudge','Prompts an opener before a match goes quiet','P1',A]]],
+['Chat and collaboration',[['1:1 chat','Read receipts optional, voice notes, files and links','P0',A],['Match context card','Always pinned: matched for what, and why','P1',A],['Openers','Generated from shared threads and work','P1',A],['Requests folder','Non-connections wait in a separate folder','P0',A],['Scheduling','Suggest a time in IST and accept in chat','P2',A],['Video calls','In-app with preview screen, or link out at first','P2',A],['Group rooms','For teams, event teams and pools','P2',A],['Trial project','4-week shared goals before committing','P3','S W'],['Team workspace','Tasks, docs and links for early teams','P3','S W H'],['Report and block','Three-step report with confidential handling','P0',A]]],
+['Launch and pooled waitlist',[['Launch page','Idea, team, stage, countdown and proof','P1','S W H'],['Announce before building','An idea can start gathering people on day one','P1','S W'],['One-tap join','Profile fills everything, with no form','P1',A],['Pool types','Users, workers, investors, advisors and others','P1',A],['Role-specific follow-up','One useful question per role, after joining','P1',A],['Pool composition bar','Everyone sees who the idea is attracting','P1',A],['Pool position','Your number by pool, with ways to move up','P1',A],['Friends in the pool','See who you know, with privacy controls','P1',A],['Build log','Short updates that notify each pool','P1','S W'],['Feature voting','The pool picks what ships first','P2',A],['Referrals','WhatsApp-first links, with unlocks for bringing people','P1',A],['Campus leaderboard','Colleges compete to back a launch','P2','S I'],['Countdown and launch day','Reminders, live counter and launch-day feed','P1',A],['Notification plan','Templates for T-10, T-7, T-3 and T-0 by pool','P2','S W'],['Builder console','Readiness, sources, pools and next best action','P1','S W H'],['Worker fit review','Ranked workers with proof, and accept or decline','P2','S W H'],['Investor updates','Private metrics and data room by pool','P3','V S W'],['Revenue verification','Connected, verified revenue shown publicly, if chosen','P3','S W V'],['Public web page','Shareable and SEO-friendly, viewable without an account','P1',A],['Launch boost','Paid reach only to people who fit','P3','S W H']]],
+['Events',[['Event discovery','Hackathons, competitions, meetups, online and near you','P1',A],['One-tap registration','Uses the profile; calendar added automatically','P1',A],['Host tools','Create, custom page, waitlist, tickets and check-in','P2','S W H'],['Event space','Discussion, schedule, rules, judges and updates','P2',A],['Team formation','Match with people who need your skills','P2','S I'],['QR check-in','Also connects attendees quickly','P2',A],['Submissions and judging','Project uploads, scoring and results','P3','S I H'],['Verified achievements','Organiser-confirmed results added to profiles','P2','S I'],['Event to launch','Turn a project into a launch page in one step','P2','S W'],['Paid tickets','UPI and card, with organiser payouts','P3','H W'],['Sponsor tools','Sponsor pages and hiring from attendee pools, with consent','P3','H V']]],
+['Topic radar and gap finding',[['Interest versus building map','Places topics by people interested and startups building','P2',A],['Volatility','Whether interest is rising, steady or fading','P2',A],['Attempt quality','Whether existing startups have real users','P3','S W V'],['Possible edge','Repeated unanswered questions, with linked sources','P3','S W V'],['Start on this gap','One step from a gap to a launch or thread','P2','S W'],['Find people for it','Matches people interested in that topic','P2','S W'],['Gap alerts','Alerts when a followed topic shifts','P3','S W V'],['Trend reports','Monthly reports for investors and sponsors','P3','V H']]],
+['Roles and hiring',[['Role board','Internship, part-time, full-time, advisor; paid or equity','P1','S I W H'],['Apply with profile','No resume needed; proof is attached','P1','S I W'],['Fit reason','Why this role fits, shown to both sides','P1','S I W H'],['Required stipend field','Reduces exploitation of interns','P1','I H'],['Applicant review','Sorted by proof; pass with a kind automatic note','P2','H'],['Completion certificate','Confirmed by the team and added to the profile','P2','I'],['Company pages','For startups and larger hiring teams','P2','H'],['Hiring plans','Paid plans for companies recruiting from pools','P3','H']]],
+['Investor view',[['Thesis setup','Sectors, stage, ticket size and geography','P2','V'],['Rising list','Launches and builders moving this week, with reasons','P2','V'],['Watchlist','Follow quietly and receive milestone alerts','P2','V'],['Consent-based intros','Founders accept first; no cold messages','P2','V S W'],['Data room','Shared per investor, with viewing history','P3','V S W'],['Investor reputation','Response rate and founder feedback','P3','V S W'],['Disclaimer and compliance','No investment advice; check legal review before launch','P2','V']]],
+['Notifications and activity',[['Needs-you section','Items needing action are separate from updates','P1',A],['Tabs by type','Matches, threads, launches and events','P1',A],['Daily digest','The default, instead of constant pings','P1',A],['Per-type controls','Choose push, email or WhatsApp by type','P1',A],['Quiet hours','Default night hours in IST','P1',A],['Anticipation alerts','Countdown and “your vote closes” reminders','P1',A],['WhatsApp updates','Opt-in only','P2',A]]],
+['Money',[['Pro for students','Lower price with verified student status','P2','S I'],['Pro for professionals','Insights, filters and interested view','P2','W'],['Payment methods','UPI first, with card support','P2',A],['Founder and hiring plans','Boosts, applicant tools and worker-pool hiring','P3','H S W'],['Investor plan','Advanced radar and rising lists','P3','V'],['Always-free promise','Threads, events, daily matches and joining pools stay free','P1',A]]],
+['Safety and settings',[['Report flow','Reason, details, submit; the person is never told','P0',A],['Block and mute','By person, circle or topic','P0',A],['Settings groups','Account, sign-in and security, visibility, communications, data privacy','P0',A],['Idea protection','Timestamped idea posts and private mode for launches','P2','S W'],['Data controls','Download data, delete account, reset signals, DPDP Act compliance','P1',A],['Fake account checks','Photo checks and behaviour checks','P1',A],['Harassment protections','Message limits, safety prompts and a dedicated report category','P0',A],['Help center','Searchable help and in-app support','P1',A]]],
+['Design and platform',[['Dark and light themes','Dark first in this draft; light to follow','P1',A],['Android first','Fast on low-cost devices and slow networks','P0',A],['iOS and web','Web for launch pages first, then full web app','P1',A],['Offline drafts','Posts and replies are saved when the network drops','P1',A],['Accessibility','Screen readers, 44 px targets and dynamic text','P0',A],['Empty and loading states','Every screen has a useful next step and a skeleton','P0',A],['Analytics and experiments','Events and A/B tests for every core flow','P0','Internal'],['Admin console','Moderation, verification, featured content and data checks','P1','Internal'],['Public API','For partner colleges and event organisers','P3','Internal']]]
+];const f=this.state.f;let n=0;const groups=D.map(([t,R])=>{const rows=R.filter(r=>f==='All'||r[2]===f).map(r=>({n:r[0],d:r[1],p:r[2],a:r[3],c:r[2]==='P0'?'tag y':(r[2]==='P1'?'tag b':'tag')}));n+=rows.length;return{t,rows}}).filter(g=>g.rows.length);return{groups,count:n,filters:['All','P0','P1','P2','P3'].map(t=>({t,cls:t===f?'chip on':'chip',pick:()=>this.setState({f:t})}))}}}
+return Component})()};
+const get=(sc,path)=>{path=path.trim();if(path==='true')return true;if(path==='false')return false;return path.split('.').reduce((o,k)=>o==null?undefined:o[k],sc)};
+const WHOLE=/^\s*\{\{([^}]+)\}\}\s*$/;
+const interp=(s,sc)=>s.replace(/\{\{([^}]+)\}\}/g,(_,p)=>{const v=get(sc,p);return v==null?'':String(v)});
+function kids(node,sc,into){node.childNodes.forEach(c=>walk(c,sc,into))}
+function loop(el,sc,into,build){
+  const list=get(sc,WHOLE.exec(el.getAttribute(el.hasAttribute('data-sc-for')?'list':'list'))[1])||[];
+  const as=el.getAttribute('as');
+  list.forEach((item,i)=>build(Object.assign({},sc,{[as]:item,$index:i})));
+}
+function walk(n,sc,into){
+  if(n.nodeType===3){into.appendChild(document.createTextNode(interp(n.nodeValue,sc)));return}
+  if(n.nodeType!==1)return;
+  const tag=n.localName;
+  if(tag==='sc-for'){loop(n,sc,into,s=>kids(n,s,into));return}
+  if(tag==='sc-if'){if(get(sc,WHOLE.exec(n.getAttribute('value'))[1]))kids(n,sc,into);return}
+  if(tag==='dc-import'){
+    const props={};for(const a of n.attributes)if(!a.name.startsWith('hint-')&&a.name!=='name')props[a.name]=interp(a.value,sc);
+    mount(n.getAttribute('name'),props,into);return}
+  if(n.hasAttribute&&n.hasAttribute('data-sc-for')){
+    const c=n.cloneNode(true);c.removeAttribute('data-sc-for');
+    loop(n,sc,into,s=>{const d=c.cloneNode(true);['list','as'].forEach(a=>d.removeAttribute(a));for(const a of [...d.attributes])if(a.name.startsWith('hint-'))d.removeAttribute(a.name);walk(d,s,into)});return}
+  const e=n.cloneNode(false);
+  for(const a of [...e.attributes]){
+    if(!a.value.includes('{{'))continue;
+    const m=WHOLE.exec(a.value);
+    if(a.name==='onclick'){e.removeAttribute('onclick');const f=m&&get(sc,m[1]);if(typeof f==='function')e.addEventListener('click',ev=>{ev.preventDefault();f(ev)});continue}
+    e.setAttribute(a.name,interp(a.value,sc));
+  }
+  kids(n,sc,e);into.appendChild(e);
+}
+function mount(name,props,into){
+  const Cmp=COMPONENTS[name],inst=new Cmp(props),host=document.createElement('div');
+  host.style.display='contents';into.appendChild(host);
+  const tpl=document.getElementById('t-'+name).content;
+  inst._r=()=>{const f=document.createDocumentFragment();kids(tpl,inst.renderVals(),f);host.replaceChildren(f)};
+  inst._r();
+}
+document.querySelectorAll('.mount').forEach(m=>mount(m.dataset.c,{},m));
+function show(v){document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));document.querySelectorAll('.nav .chip').forEach(b=>b.classList.toggle('on',b.dataset.v===v));}
+document.querySelector('.nav').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b){show(b.dataset.v);window.scrollTo(0,0)}});
+document.addEventListener('click',e=>{
+  const a=e.target.closest('a[href]');if(!a)return;
+  const m=/^([A-Za-z]+)\.dc\.html$/.exec(a.getAttribute('href'));if(!m)return;
+  e.preventDefault();const t=document.getElementById('m-'+m[1]);if(!t)return;
+  show('screens');t.scrollIntoView({behavior:'smooth',block:'center',inline:'center'});
+  t.classList.add('flash');setTimeout(()=>t.classList.remove('flash'),1400);
+});
+</script>
+</body>
+</html>

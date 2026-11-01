@@ -1,0 +1,85 @@
+<div id="eniversal-trajectory">
+  <h2>How the core flywheel changes</h2>
+  <div class="viz-controls">
+    <label class="form-label">Product stage
+      <select class="form-select" id="ev-stage">
+        <option value="0">A useful small club</option>
+        <option value="1">A place to build teams</option>
+        <option value="2">A launch ecosystem</option>
+        <option value="3">An evidence network</option>
+        <option value="4">An agent-assisted network</option>
+        <option value="5">Delegated coordination</option>
+      </select>
+    </label>
+  </div>
+  <div id="ev-graph"></div>
+  <div id="ev-detail" aria-live="polite"></div>
+</div>
+<style>
+#eniversal-trajectory {color:var(--foreground);}
+#eniversal-trajectory #ev-graph {width:100%;margin-top:16px;}
+#eniversal-trajectory #ev-detail {margin-top:12px;}
+#eniversal-trajectory .ev-node {fill:color-mix(in srgb,var(--viz-series-1) 12%,transparent);}
+#eniversal-trajectory .ev-edge {fill:none;stroke:var(--border);stroke-width:1.5;}
+#eniversal-trajectory .ev-return {fill:none;stroke:var(--viz-series-1);stroke-width:1.5;}
+#eniversal-trajectory .ev-text {fill:var(--foreground);font-size:14px;font-weight:400;}
+#eniversal-trajectory .ev-label {fill:var(--muted-foreground);font-size:12px;font-weight:400;}
+</style>
+<script>
+(() => {
+ const root=document.getElementById('eniversal-trajectory');
+ const select=root.querySelector('#ev-stage');
+ const graph=root.querySelector('#ev-graph');
+ const detail=root.querySelector('#ev-detail');
+ const states=[
+  {nodes:['Ask a real question','Receive useful help','Make progress','Trust the community','Ask a better question'],asset:'Useful knowledge and belonging',measure:'Problems resolved; people returning'},
+  {nodes:['Show relevant work','Accept a suitable intro','Try a small task together','Confirm a shared result','Earn stronger evidence'],asset:'Proof of working well together',measure:'Mutually confirmed milestones'},
+  {nodes:['Show a project need','Gather a relevant pool','Test, contribute or advise','Improve the product','Attract active supporters'],asset:'A useful product and committed helpers',measure:'Pool members taking useful action'},
+  {nodes:['Record a real outcome','Link evidence and context','Find a better-fit person','Complete useful work','Confirm new evidence'],asset:'Trustworthy outcome history',measure:'Better results, including for newcomers'},
+  {nodes:['Tell an agent your goal','Review a sourced proposal','Choose the next step','Complete useful work','Correct what the agent learned'],asset:'Permissioned understanding of current goals',measure:'Useful results per human minute'},
+  {nodes:['Authorize a bounded task','Agent coordinates the task','Human checks the result','Record success or failure','Choose the next permission'],asset:'Earned trust for specific tasks',measure:'Accepted outcomes, cost and overrides'}
+ ];
+ const ns='http://www.w3.org/2000/svg';
+ const el=(name,attrs,text)=>{const n=document.createElementNS(ns,name);for(const [k,v] of Object.entries(attrs||{}))n.setAttribute(k,v);if(text!==undefined)n.textContent=text;return n;};
+ const clamp=v=>Number.isInteger(v)&&v>=0&&v<states.length?v:0;
+ let selected=clamp(window.openai?.widgetState?.modelContent?.stage);
+ function lines(text,max){const out=[];let line='';for(const word of text.split(' ')){if(line&&(line+' '+word).length>max){out.push(line);line=word;}else line+=(line?' ':'')+word;}if(line)out.push(line);return out;}
+ function draw(){
+   select.value=String(selected);
+   const s=states[selected],w=Math.max(280,Math.round(graph.getBoundingClientRect().width||680));
+   const wide=w>=600,boxH=72,boxW=wide?(w-112)/3:w-100;
+   const positions=wide?[[40,18],[56+boxW,18],[72+2*boxW,18],[72+2*boxW,146],[56+boxW,146]]:s.nodes.map((_,i)=>[62,18+i*100]);
+   const height=wide?260:540;
+   const svg=el('svg',{width:'100%',height,viewBox:`0 0 ${w} ${height}`,role:'img','aria-label':`${select.options[selected].text}: ${s.nodes.join(' leads to ')}; the result strengthens the next round.`});
+   svg.append(el('title',{},select.options[selected].text),el('desc',{},'Proposed causal loop, not measured growth. Each result feeds the next round.'));
+   const defs=el('defs');
+   for(const [id,color] of [['ev-arrow','var(--border)'],['ev-loop-arrow','var(--viz-series-1)']]){const marker=el('marker',{id,viewBox:'0 0 10 10',refX:9,refY:5,markerWidth:6,markerHeight:6,orient:'auto-start-reverse'});marker.append(el('path',{d:'M 0 0 L 10 5 L 0 10 z',fill:color}));defs.append(marker);}
+   svg.append(defs);
+   for(let i=0;i<4;i++){
+     const [x,y]=positions[i],[nx,ny]=positions[i+1];
+     let d;
+     if(!wide||y!==ny)d=`M ${x+boxW/2} ${y+boxH+3} L ${nx+boxW/2} ${ny-4}`;
+     else if(nx>x)d=`M ${x+boxW+3} ${y+boxH/2} L ${nx-4} ${ny+boxH/2}`;
+     else d=`M ${x-3} ${y+boxH/2} L ${nx+boxW+4} ${ny+boxH/2}`;
+     svg.append(el('path',{d,class:'ev-edge','marker-end':'url(#ev-arrow)'}));
+   }
+   let back;
+   if(wide){const [x,y]=positions[4];back=`M ${x-3} ${y+boxH/2} L ${40+boxW/2} ${y+boxH/2} L ${40+boxW/2} ${18+boxH+4}`;}
+   else{const [x,y]=positions[4];back=`M ${x-3} ${y+boxH/2} L 26 ${y+boxH/2} L 26 54 L 58 54`;}
+   svg.append(el('path',{d:back,class:'ev-return','marker-end':'url(#ev-loop-arrow)'}));
+   positions.forEach(([x,y],i)=>{
+     svg.append(el('rect',{x,y,width:boxW,height:boxH,rx:8,class:'ev-node'}));
+     const words=lines(s.nodes[i],Math.max(18,Math.floor((boxW-24)/7)));
+     const t=el('text',{x:x+boxW/2,y:y+boxH/2-(words.length-1)*9+4,'text-anchor':'middle',class:'ev-text'});
+     words.forEach((line,j)=>t.append(el('tspan',{x:x+boxW/2,dy:j?18:0},line)));svg.append(t);
+   });
+   svg.append(el('text',{x:wide?40:62,y:height-12,class:'ev-label'},'↻ The result helps the next round'));
+   graph.replaceChildren(svg);
+   detail.textContent=`Grows: ${s.asset}. Measure: ${s.measure}.`;
+ }
+ select.addEventListener('change',()=>{selected=clamp(Number(select.value));draw();window.openai?.setWidgetState?.({modelContent:{stage:selected,stageName:select.options[selected].text},privateContent:null})?.catch(()=>{});});
+ window.addEventListener('openai:set_globals',event=>{const incoming=event.detail?.globals?.widgetState?.modelContent?.stage;if(incoming!==undefined){selected=clamp(incoming);draw();}});
+ new ResizeObserver(draw).observe(graph);
+ draw();
+})();
+</script>
